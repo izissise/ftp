@@ -5,10 +5,10 @@
 ## Login   <moriss_h@epitech.net>
 ##
 ## Started on  Sun Jun  9 03:35:24 2013 Hugues
-## Last update Fri Mar 14 00:11:31 2014 Hugues
+## Last update Mon Mar 24 21:03:33 2014 Hugues
 ##
 
-SRC			=	utils.c
+SRC			=	socket.c
 
 SRCCLIENT		=	client/main.c
 
@@ -23,7 +23,7 @@ RM		=	rm -f
 
 CLIENT		=	client
 SERVER		=	server
-NAME			=	my_ftp
+NAME		=	my_ftp
 
 OBJDIR		=	obj/
 SRCDIR		=	src/
@@ -73,7 +73,7 @@ clean:
 	@$(RM) $(OBJSERVER) $(OBJCLIENT)
 
 fclean:	clean
-	@echo -e "Removing ${NM} ${OBJDUMP} !" | sed 's/^-e //' \
+	@echo -e "Removing ${CLIENT} ${SERVER} !" | sed 's/^-e //' \
 	| sed 's/[-a-zA-Z]\+/\x1B[36m&\x1B[0m/g'
 	@$(RM) $(CLIENT) $(SERVER)
 
@@ -82,3 +82,4 @@ re:	fclean all
 help:
 	@echo -e "\033[37mTarget available: all, clean, fclean\033[00m" \
 	| sed 's/^-e //'
+
