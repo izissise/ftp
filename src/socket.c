@@ -8,7 +8,4 @@
 ** Last update Mon Oct  8 16:20:21 2012 hugues morisset
 */
 
-int	socket_init(const char *ip, const char *port)
-{
-}
-
+#include "network.h"

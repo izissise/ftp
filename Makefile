@@ -8,7 +8,9 @@
 ## Last update Mon Mar 24 21:03:33 2014 Hugues
 ##
 
-SRC			=	socket.c
+SRC			=	socket.c \
+				inet.c \
+				file.c
 
 SRCCLIENT		=	client/main.c
 
