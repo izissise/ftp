@@ -14,9 +14,10 @@ int	main(int ac, char **av)
 {
   (void)ac;
   (void)av;
-  t_net *net;
+  t_net *server;
 
-  net = create_connection("localhost", "8001", SOCK_STREAM, &bind);
+  server = create_connection(NULL, "8001", SOCK_STREAM, &bind);
 
+  close_connection(server);
   return (0);
 }

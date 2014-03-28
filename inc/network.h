@@ -12,6 +12,7 @@
 # define NETWORK_H_INCLUDED
 
 # include <errno.h>
+# include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <string.h>
@@ -32,5 +33,7 @@ t_net		*create_connection(const char *host, const char *port,
                            int socktype, int	(*f)(int sockfd,
                                const struct sockaddr *addr,
                                socklen_t addrlen));
+void		close_connection(t_net *net);
+void		*get_ip_addr(t_net *net);
 
 #endif // NETWORK_H_INCLUDED
