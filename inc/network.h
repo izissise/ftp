@@ -21,6 +21,8 @@
 # include <netdb.h>
 # include <arpa/inet.h>
 
+# define MAX_CLIENTS 50
+
 typedef struct			s_net
 {
   struct sockaddr_storage	addr;
@@ -34,6 +36,7 @@ t_net		*create_connection(const char *host, const char *port,
                                const struct sockaddr *addr,
                                socklen_t addrlen));
 void		close_connection(t_net *net);
+t_net	*accept_connection(int sockfd);
 void		*get_ip_addr(t_net *net);
 
 #endif // NETWORK_H_INCLUDED

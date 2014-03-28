@@ -29,7 +29,7 @@ int		use_ipsocket(t_net *net, struct addrinfo *tmp,
                             socklen_t addrlen))
 {
   int		ret;
-  memcpy(&(net->addr), (tmp->ai_addr), tmp->ai_addrlen);
+  memcpy(&(net->addr), tmp->ai_addr, tmp->ai_addrlen);
   net->addr.ss_family = tmp->ai_addr->sa_family;
   net->socktype = tmp->ai_socktype;
   net->addrlen = tmp->ai_addrlen;

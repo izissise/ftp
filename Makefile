@@ -10,6 +10,7 @@
 
 SRC			=	socket.c \
 				inet.c \
+				inet_accept.c \
 				file.c
 
 SRCCLIENT		=	client/main.c
