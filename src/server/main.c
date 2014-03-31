@@ -10,15 +10,20 @@
 
 #include "server.h"
 
-void	new_client(t_net *server, t_net *client)
+void		new_client(t_net *server, t_net *client)
 {
-  pid_t	tmp;
+  t_fclient	fcli;
+  pid_t		tmp;
 
   tmp = fork();
   if (tmp == 0)
     {
       close_connection(server);
-      handle_clients(client);
+      fcli.net = client;
+      fcli.basedir = get_pwd();
+      fcli.currdir = strdup(fcli.basedir);
+      fcli.quit = 0;
+      handle_clients(&fcli);
       close_connection(client);
       exit(0);
     }

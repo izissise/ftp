@@ -11,11 +11,25 @@
 #ifndef SERVER_H_INCLUDED
 # define SERVER_H_INCLUDED
 
-# include <sys/types.h>
-# include <sys/wait.h>
+# include <signal.h>
+# include <string.h>
 
 # include "network.h"
 
-void	handle_clients(t_net *client);
+typedef struct	s_fclient
+{
+  t_net		*net;
+  char		*basedir;
+  char		*currdir;
+  int		quit;
+}		t_fclient;
+
+typedef struct	s_strfunc
+{
+  const char	*str;
+  void		(*func)(t_fclient *client);
+}		t_strfunc;
+
+void	handle_clients(t_fclient *client);
 
 #endif /* !SERVER_H_INCLUDED */

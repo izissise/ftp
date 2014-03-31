@@ -10,14 +10,44 @@
 
 #include "server.h"
 
-void	handle_clients(t_net *client)
+void noop(t_fclient *client)
+{
+  (void)client;
+}
+
+static t_strfunc	cmds[] = {
+  {"ls", &noop},
+  {"cd", &noop},
+  {"get", &noop},
+  {"put", &noop},
+  {"pwd", &noop},
+  {"quit", &noop}
+};
+
+void	client_commands(t_fclient * client, char *command)
+{
+  int	i;
+
+  i = 0;
+  while (i < (int)(sizeof(cmds) / sizeof(char*)))
+    {
+      if (!strcmp((cmds[i]).str, command))
+        ((cmds[i]).func)(client);
+      i++;
+    }
+}
+
+void	handle_clients(t_fclient * client)
 {
   char	buff[128];
   int	t;
 
-  write(client->socket, "Send your stuff\n", sizeof("Send your stuff\n"));
-  while ((t = read(client->socket, buff, 128)) > 0)
+  write(client->net->socket, "Send your stuff\n", sizeof("Send your stuff\n"));
+  while (((t = read(client->net->socket, buff, 128)) > 0) && !(client->quit))
     {
-      write(client->socket, buff, t);
+      client_commands(client, "put");
+      write(client->net->socket, buff, t);
     }
+  if (t == -1)
+    perror("client");
 }

@@ -13,5 +13,4 @@
 
 # include "network.h"
 
-
 #endif /* !CLIENT_H_INCLUDED */
