@@ -11,6 +11,7 @@
 #ifndef NETWORK_H_INCLUDED
 # define NETWORK_H_INCLUDED
 
+# define _GNU_SOURCE
 # include <errno.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -41,9 +42,7 @@ void		close_connection(t_net *net);
 t_net	*accept_connection(int sockfd);
 void		*get_ip_addr(t_net *net);
 
-int	ptr_tab_size(void **tab);
-void	**add_ptr_t_tab(void **tab, void *add);
-void	rm_ptr_f_tab(void **tab, void *ptr);
-void	free_ptr_tab(void **tab, void	(*f)(void *ptr));
+char	*get_pwd();
+char	*abs_path(char *currpath);
 
 #endif /* !NETWORK_H_INCLUDED */
