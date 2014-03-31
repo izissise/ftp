@@ -8,14 +8,10 @@
 ** Last update Mon Oct  8 16:20:21 2012 hugues morisset
 */
 
-#ifndef SERVER_H_INCLUDED
-# define SERVER_H_INCLUDED
-
-# include <sys/types.h>
-# include <sys/wait.h>
+#ifndef CLIENT_H_INCLUDED
+# define CLIENT_H_INCLUDED
 
 # include "network.h"
 
-void	handle_clients(t_net *client);
 
-#endif /* !SERVER_H_INCLUDED */
+#endif /* !CLIENT_H_INCLUDED */

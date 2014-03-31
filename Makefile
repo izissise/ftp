@@ -10,8 +10,7 @@
 
 SRC			=	inet.c \
 				inet_accept.c \
-				file.c \
-				ptr_tab.c
+				file.c
 
 SRCCLIENT		=	client/main.c
 

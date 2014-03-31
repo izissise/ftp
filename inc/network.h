@@ -46,4 +46,4 @@ void	**add_ptr_t_tab(void **tab, void *add);
 void	rm_ptr_f_tab(void **tab, void *ptr);
 void	free_ptr_tab(void **tab, void	(*f)(void *ptr));
 
-#endif // NETWORK_H_INCLUDED
+#endif /* !NETWORK_H_INCLUDED */
