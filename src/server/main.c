@@ -8,48 +8,44 @@
 ** Last update Mon Oct  8 16:20:21 2012 hugues morisset
 */
 
-#include "network.h"
+#include "server.h"
 
-int	main(int ac, char **av)
+void	new_client(t_net *server, t_net *client)
 {
-  (void)ac;
-  (void)av;
-  char buff[1024];
-  int t;
-  t_net *server;
-  t_net *client;
+  pid_t	tmp;
 
+  tmp = fork();
+  if (tmp == 0)
+    {
+      close_connection(server);
+      handle_clients(client);
+      close_connection(client);
+      exit(0);
+    }
+  else if (tmp < 0)
+    perror("fork");
+  close_connection(client);
+}
+
+int	main(UNSEDP int ac, UNSEDP char **av)
+{
+  t_net	*server;
+  t_net	*client;
+
+  signal(SIGCHLD, SIG_IGN);
   server = create_connection(NULL, "8001", SOCK_STREAM, &bind);
+  if (!server)
+    return (1);
   if (listen(server->socket, MAX_CLIENTS) == -1)
     perror("listen");
-
-
-
   printf("server: waiting for connections...\n");
-
-  while(1) {  // main accept() loop
+  while(1)
+    {
       if (!(client = accept_connection(server->socket)))
         continue;
-      inet_ntop(((struct sockaddr*)(&(client->addr)))->sa_family,
-                get_ip_addr(client), buff, sizeof(buff));
-      printf("server: got connection from %s\n", buff);
-
-      if (!fork()) { // this is the child process
-          close_connection(server);
-          if (send(client->socket, "Hello, world!", 13, 0) == -1)
-            perror("send");
-          close_connection(client);
-          exit(0);
-        }
-      close_connection(client); // parent doesn't need this
+      new_client(server, client);
     }
-
-
-  /*
-    while ((t = read(server->socket, buff, 1024) >= 0))
-      {
-        write(1, buff, t);
-      }*/
   close_connection(server);
   return (0);
 }
+

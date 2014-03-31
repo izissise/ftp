@@ -21,6 +21,8 @@
 # include <netdb.h>
 # include <arpa/inet.h>
 
+# define UNSEDP __attribute__((unused))
+# define PTRT_PACK 10
 # define MAX_CLIENTS 50
 
 typedef struct			s_net
@@ -38,5 +40,10 @@ t_net		*create_connection(const char *host, const char *port,
 void		close_connection(t_net *net);
 t_net	*accept_connection(int sockfd);
 void		*get_ip_addr(t_net *net);
+
+int	ptr_tab_size(void **tab);
+void	**add_ptr_t_tab(void **tab, void *add);
+void	rm_ptr_f_tab(void **tab, void *ptr);
+void	free_ptr_tab(void **tab, void	(*f)(void *ptr));
 
 #endif // NETWORK_H_INCLUDED

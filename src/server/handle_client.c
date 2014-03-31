@@ -9,3 +9,15 @@
 */
 
 #include "network.h"
+
+void	handle_clients(t_net *client)
+{
+  char	buff[128];
+  int	t;
+
+  write(client->socket, "Send your stuff\n", sizeof("Send your stuff\n"));
+  while ((t = read(client->socket, buff, 128)) > 0)
+    {
+      write(client->socket, buff, t);
+    }
+}

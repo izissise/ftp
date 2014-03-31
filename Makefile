@@ -8,14 +8,15 @@
 ## Last update Mon Mar 24 21:03:33 2014 Hugues
 ##
 
-SRC			=	socket.c \
-				inet.c \
+SRC			=	inet.c \
 				inet_accept.c \
-				file.c
+				file.c \
+				ptr_tab.c
 
 SRCCLIENT		=	client/main.c
 
-SRCSERVER	=	server/main.c
+SRCSERVER	=	server/main.c \
+			server/handle_client.c
 
 SRCCLIENT	+=	$(SRC)
 SRCSERVER	+=	$(SRC)
@@ -26,7 +27,7 @@ RM		=	rm -f
 
 CLIENT		=	client
 SERVER		=	server
-NAME		=	my_ftp
+NAME			=	my_ftp
 
 OBJDIR		=	obj/
 SRCDIR		=	src/
