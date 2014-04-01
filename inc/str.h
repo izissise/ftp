@@ -21,6 +21,12 @@
 # define UNSEDP __attribute__((unused))
 # define PTRT_PACK 10
 
+typedef struct	s_strfunc
+{
+  const char	*str;
+  void		(*func)();
+}		t_strfunc;
+
 char	*get_pwd();
 char	*abs_path(char *currpath);
 int	is_path_out(char *basepath, char *path);
@@ -34,5 +40,6 @@ void	**concat_ptr_tab(void **tab1, void **tab2);
 
 char	**expand_reg_exp(char *regexp);
 void	expand_reg_exp_on_tab(char ***tab);
+char	*get_next_line(const int fd);
 
 #endif /* !STR_H_INCLUDED */

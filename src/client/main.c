@@ -10,9 +10,9 @@
 
 #include "client.h"
 
-int	main(UNSEDP int ac, UNSEDP char **av)
+int	main(int ac, char **av)
 {
-  char	buff[1024];
+  char	buff[READ_SIZE];
   int	tmp;
   t_net	*client;
 
@@ -20,9 +20,15 @@ int	main(UNSEDP int ac, UNSEDP char **av)
     return (1);
   if (!(client = create_connection(av[1], av[2], SOCK_STREAM, &connect)))
     return (1);
-  while ((tmp = read(1, buff, 1024)) > 0)
+  while ((tmp = read(0, buff, READ_SIZE)) > 0)
     {
       write(client->socket, buff, tmp);
+
+      while ((tmp = read(client->socket, buff, READ_SIZE)) > 0)
+        {
+          write(1, buff, tmp);
+        }
+
     }
   close_connection(client);
   return (0);

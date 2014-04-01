@@ -25,12 +25,6 @@ typedef struct	s_fclient
   int		quit;
 }		t_fclient;
 
-typedef struct	s_strfunc
-{
-  const char	*str;
-  void		(*func)(t_fclient *client);
-}		t_strfunc;
-
 void	handle_clients(t_fclient *client);
 
 #endif /* !SERVER_H_INCLUDED */

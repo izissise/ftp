@@ -16,12 +16,14 @@ void noop(t_fclient *client)
 }
 
 static t_strfunc	cmds[] = {
-  {"ls", &noop},
-  {"cd", &noop},
-  {"get", &noop},
-  {"put", &noop},
-  {"pwd", &noop},
-  {"quit", &noop}
+  {"LS", &noop},
+  {"CD", &noop},
+  {"GET", &noop},
+  {"PUT", &noop},
+  {"PWD", &noop},
+  {"QUIT", &noop},
+  {"USER", &noop},
+  {"PASS", &noop}
 };
 
 void	client_commands(t_fclient *client, char *command)
@@ -37,17 +39,14 @@ void	client_commands(t_fclient *client, char *command)
     }
 }
 
-void	handle_clients(t_fclient * client)
+void	handle_clients(t_fclient *client)
 {
-  char	buff[128];
-  int	t;
+  char	*line;
 
   write(client->net->socket, "Send your stuff\n", sizeof("Send your stuff\n"));
-  while (((t = read(client->net->socket, buff, 128)) > 0) && !(client->quit))
+  while ((line = get_next_line(client->net->socket)) && !(client->quit))
     {
-      client_commands(client, "put");
-      write(client->net->socket, buff, t);
+      client_commands(client, line);
+      free(line);
     }
-  if (t == -1)
-    perror("client");
 }
