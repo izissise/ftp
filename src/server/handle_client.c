@@ -24,7 +24,7 @@ static t_strfunc	cmds[] = {
   {"quit", &noop}
 };
 
-void	client_commands(t_fclient * client, char *command)
+void	client_commands(t_fclient *client, char *command)
 {
   int	i;
 

@@ -15,6 +15,7 @@
 # include <string.h>
 
 # include "network.h"
+# include "str.h"
 
 typedef struct	s_fclient
 {

@@ -44,7 +44,7 @@ int	main(UNSEDP int ac, UNSEDP char **av)
   if (listen(server->socket, MAX_CLIENTS) == -1)
     perror("listen");
   printf("server: waiting for connections...\n");
-  while(1)
+  while (1)
     {
       if (!(client = accept_connection(server->socket)))
         continue;

@@ -11,12 +11,11 @@
 #ifndef NETWORK_H_INCLUDED
 # define NETWORK_H_INCLUDED
 
-# define _GNU_SOURCE
 # include <errno.h>
-# include <unistd.h>
-# include <stdlib.h>
 # include <stdio.h>
+# include <stdlib.h>
 # include <string.h>
+# include <unistd.h>
 # include <sys/types.h>
 # include <sys/socket.h>
 # include <netdb.h>
@@ -41,8 +40,5 @@ t_net		*create_connection(const char *host, const char *port,
 void		close_connection(t_net *net);
 t_net	*accept_connection(int sockfd);
 void		*get_ip_addr(t_net *net);
-
-char	*get_pwd();
-char	*abs_path(char *currpath);
 
 #endif /* !NETWORK_H_INCLUDED */
