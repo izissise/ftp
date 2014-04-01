@@ -10,11 +10,14 @@
 
 #include "str.h"
 
-char	**str_wt(const char *str)
+char	**str_wt(const char *str, const char *sepa)
 {
   char	**res;
+  char	*tmp;
 
-  if (!str)
+  if (!str || ((tmp = strdup(str)) == NULL))
     return (NULL);
+
+  free(tmp);
   return (res);
 }

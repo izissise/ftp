@@ -21,8 +21,6 @@
 # include <netdb.h>
 # include <arpa/inet.h>
 
-# define UNSEDP __attribute__((unused))
-# define PTRT_PACK 10
 # define MAX_CLIENTS 50
 
 typedef struct			s_net

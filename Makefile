@@ -15,7 +15,8 @@ SRC			=	inet.c \
 				reg_expr.c \
 				str_to_wt.c \
 				ptr_tab.c \
-				clean_tab.c
+				clean_tab.c \
+				get_next_line.c
 
 SRCCLIENT		=	client/main.c
 

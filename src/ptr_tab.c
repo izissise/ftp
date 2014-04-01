@@ -8,7 +8,7 @@
 ** Last update Fri May 24 17:58:57 2013 hugues morisset
 */
 
-#include "network.h"
+#include "str.h"
 
 int	ptr_tab_size(void **tab)
 {

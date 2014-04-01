@@ -17,6 +17,10 @@
 # include <string.h>
 # include <unistd.h>
 
+# define READ_SIZE 4096
+# define UNSEDP __attribute__((unused))
+# define PTRT_PACK 10
+
 char	*get_pwd();
 char	*abs_path(char *currpath);
 int	is_path_out(char *basepath, char *path);
