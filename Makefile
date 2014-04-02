@@ -17,6 +17,7 @@ SRC			=	inet.c \
 				ptr_tab.c \
 				clean_tab.c \
 				socket.c \
+				ls.c \
 				get_next_line.c
 
 SRCCLIENT		=	client/main.c

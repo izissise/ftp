@@ -18,3 +18,7 @@ void	noop(t_fclient *client, UNSEDP char **args)
   write_sock(buff, client->net->socket, -1);
 }
 
+void	list(t_fclient *client, char **args)
+{
+  ls_base(&(args[1]), client->net->socket);
+}

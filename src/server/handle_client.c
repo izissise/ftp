@@ -11,8 +11,8 @@
 #include "server.h"
 
 static t_strfunc	cmds[] = {
-  {"LIST", &noop},
-  {"CD", &noop},
+  {"LIST", &list},
+  {"CWD", &noop},
   {"GET", &noop},
   {"PUT", &noop},
   {"PWD", &noop},
@@ -37,7 +37,7 @@ void	(*client_commands(char *command))()
   i = 0;
   while (i < (int)(sizeof(cmds) / sizeof(t_strfunc)))
     {
-      if (!strncasecmp((cmds[i]).str, command, strlen(command)))
+      if (!(strncasecmp((cmds[i]).str, command, strlen((cmds[i]).str))))
         return ((cmds[i]).func);
       i++;
     }

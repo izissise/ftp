@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <string.h>
 # include <unistd.h>
+# include <errno.h>
 
 # define READ_SIZE 4096
 # define UNSEDP __attribute__((unused))
@@ -43,5 +44,7 @@ void	expand_reg_exp_on_tab(char ***tab);
 char	*get_next_line(const int fd);
 char	**str_wt(const char *str, const char *sepa);
 void	write_sock(const char *str, int socket, int strlen);
+
+void	ls_base(char **argv, int out);
 
 #endif /* !STR_H_INCLUDED */
