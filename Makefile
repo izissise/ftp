@@ -16,12 +16,14 @@ SRC			=	inet.c \
 				str_to_wt.c \
 				ptr_tab.c \
 				clean_tab.c \
+				socket.c \
 				get_next_line.c
 
 SRCCLIENT		=	client/main.c
 
 SRCSERVER	=	server/main.c \
-			server/handle_client.c
+			server/handle_client.c \
+			server/commands.c
 
 SRCCLIENT	+=	$(SRC)
 SRCSERVER	+=	$(SRC)

@@ -42,5 +42,6 @@ char	**expand_reg_exp(char *regexp);
 void	expand_reg_exp_on_tab(char ***tab);
 char	*get_next_line(const int fd);
 char	**str_wt(const char *str, const char *sepa);
+void	write_sock(const char *str, int socket, int strlen);
 
 #endif /* !STR_H_INCLUDED */

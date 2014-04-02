@@ -10,51 +10,50 @@
 
 #include "server.h"
 
-void noop(t_fclient *client)
-{
-  (void)client;
-}
-
 static t_strfunc	cmds[] = {
-  {"LS", &noop},
+  {"LIST", &noop},
   {"CD", &noop},
   {"GET", &noop},
   {"PUT", &noop},
   {"PWD", &noop},
   {"QUIT", &noop},
   {"USER", &noop},
-  {"PASS", &noop}
+  {"PASS", &noop},
+  {"NOOP", &noop}
 };
 
-void	client_commands(t_fclient *client, char *command)
+void	unknow_cmd(t_fclient *client, char **args)
+{
+  char	buff[READ_SIZE];
+
+  snprintf(buff, READ_SIZE, "%s: unknow commands\n", args[0]);
+  write_sock(buff, client->net->socket, -1);
+}
+
+void	(*client_commands(char *command))()
 {
   int	i;
 
   i = 0;
-  while (i < (int)(sizeof(cmds) / sizeof(char*)))
+  while (i < (int)(sizeof(cmds) / sizeof(t_strfunc)))
     {
-      if (!strcmp((cmds[i]).str, command))
-        ((cmds[i]).func)(client);
+      if (!strncasecmp((cmds[i]).str, command, strlen(command)))
+        return ((cmds[i]).func);
       i++;
     }
+  return (&unknow_cmd);
 }
 
 void	handle_clients(t_fclient *client)
 {
   char	*line;
   char	**args;
-  int i;
 
   write(client->net->socket, "Send your stuff\n", sizeof("Send your stuff\n"));
   while ((line = get_next_line(client->net->socket)) && !(client->quit))
     {
-      args = str_wt(line, " ");
-      if (args)
-        for (i = 0; args[i]; i++)
-          {
-            printf("%s\n", args[i]);
-          }
-      //client_commands(client, line);
+      if ((args = str_wt(line, " ")))
+        (client_commands(args[0]))(client, args);
       free(line);
     }
 }
