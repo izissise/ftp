@@ -12,7 +12,7 @@
 
 static t_strfunc	cmds[] = {
   {"LIST", &list},
-  {"CWD", &noop},
+  {"CWD", &cd},
   {"GET", &noop},
   {"PUT", &noop},
   {"PWD", &noop},

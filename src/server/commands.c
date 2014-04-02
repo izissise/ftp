@@ -22,3 +22,17 @@ void	list(t_fclient *client, char **args)
 {
   ls_base(&(args[1]), client->net->socket);
 }
+
+void	cd(t_fclient *client, char **args)
+{
+  if (ptr_tab_size((void**)args) != 2)
+    write_sock("cd require 1 argument\n", client->net->socket, -1);
+  else if (is_path_out(client->basedir, args[1]))
+    write_sock("cd: Invalid path\n", client->net->socket, -1);
+  else if (!(cd_base(&(args[1]), client->net->socket)))
+    {
+      free(client->currdir);
+      client->currdir = get_pwd();
+
+    }
+}

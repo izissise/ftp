@@ -29,5 +29,6 @@ void	handle_clients(t_fclient *client);
 
 void	noop(t_fclient *client, UNSEDP char **args);
 void	list(t_fclient *client, UNSEDP char **args);
+void	cd(t_fclient *client, UNSEDP char **args);
 
 #endif /* !SERVER_H_INCLUDED */
