@@ -42,11 +42,19 @@ void	client_commands(t_fclient *client, char *command)
 void	handle_clients(t_fclient *client)
 {
   char	*line;
+  char	**args;
+  int i;
 
   write(client->net->socket, "Send your stuff\n", sizeof("Send your stuff\n"));
   while ((line = get_next_line(client->net->socket)) && !(client->quit))
     {
-      client_commands(client, line);
+      args = str_wt(line, " ");
+      if (args)
+        for (i = 0; args[i]; i++)
+          {
+            printf("%s\n", args[i]);
+          }
+      //client_commands(client, line);
       free(line);
     }
 }

@@ -28,7 +28,6 @@ int	main(int ac, char **av)
         {
           write(1, buff, tmp);
         }
-
     }
   close_connection(client);
   return (0);
