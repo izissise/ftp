@@ -32,14 +32,25 @@ char	*get_pwd()
   return (res);
 }
 
-int	is_path_out(char *basepath, char *path)
+char	*is_path_out(char *basepath, char *path)
 {
   char	*abspath;
+  char	*tmppath;
 
-  abspath = abs_path(path);
+  if (!path || (tmppath = malloc(strlen(path) + 3)) == NULL)
+    return (NULL);
+  snprintf(tmppath, strlen(path) + 3, "%s%s%s", path[0] == '/' ? "" : "./",
+           &(path[path[0] == '/']), "/");
+  abspath = abs_path(tmppath);
+  free(tmppath);
   if ((abspath == NULL) || (basepath == NULL))
-    return (1);
+    return (NULL);
   if (strncmp(basepath, abspath, strlen(basepath)))
-    return (1);
-  return (0);
+    {
+      printf("%s\n", abspath);
+      free(abspath);
+      return (NULL);
+    }
+  printf("%s\n", abspath);
+  return (abspath);
 }

@@ -49,7 +49,7 @@ void	handle_clients(t_fclient *client)
   char	*line;
   char	**args;
 
-  write(client->net->socket, "Send your stuff\n", sizeof("Send your stuff\n"));
+  write_sock("Welcome !\nType HELP for help.\n", client->net->socket, -1);
   while ((line = get_next_line(client->net->socket)) && !(client->quit))
     {
       if ((args = str_wt(line, " ")))

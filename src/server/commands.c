@@ -20,6 +20,19 @@ void	noop(t_fclient *client, UNSEDP char **args)
 
 void	list(t_fclient *client, char **args)
 {
+  char	*tmp;
+
+  if (args[1] != NULL)
+    {
+      tmp = is_path_out(client->basedir, args[1]);
+      if (tmp)
+        {
+          write_sock("ls: Invalid path\n", client->net->socket, -1);
+          return ;
+        }
+      swap_ptr((void**)(&(args[1])), (void**)&tmp);
+      free(tmp);
+    }
   ls_base(&(args[1]), client->net->socket);
 }
 
@@ -33,6 +46,5 @@ void	cd(t_fclient *client, char **args)
     {
       free(client->currdir);
       client->currdir = get_pwd();
-
     }
 }
