@@ -22,6 +22,9 @@
 # define UNSEDP __attribute__((unused))
 # define PTRT_PACK 10
 
+# define MASK_IT(x, y, z) (((x) & (y)) == (z))
+# define CHECKTYPE(x, y, z) (MASK_IT(perm, (y), (z)) * (x))
+
 typedef struct	s_strfunc
 {
   const char	*str;

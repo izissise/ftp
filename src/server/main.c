@@ -38,7 +38,7 @@ int	main(UNSEDP int ac, UNSEDP char **av)
   t_net	*client;
 
   signal(SIGCHLD, SIG_IGN);
-  server = create_connection(NULL, av[1] ? av[1] : "22", SOCK_STREAM, &bind);
+  server = create_connection("0.0.0.0", av[1] ? av[1] : "22", SOCK_STREAM, &bind);
   if (!server)
     return (1);
   if (listen(server->socket, MAX_CLIENTS) == -1)
