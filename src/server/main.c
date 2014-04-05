@@ -10,6 +10,17 @@
 
 #include "server.h"
 
+int	g_quit = 0;
+
+void	signal_handler(int sig)
+{
+  if (sig == SIGINT)
+    {
+      g_quit = 1;
+      kill(getpid(), SIGUSR1);
+    }
+}
+
 void		new_client(t_net *server, t_net *client)
 {
   t_fclient	fcli;
@@ -38,13 +49,14 @@ int	main(UNSEDP int ac, UNSEDP char **av)
   t_net	*client;
 
   signal(SIGCHLD, SIG_IGN);
-  server = create_connection("0.0.0.0", av[1] ? av[1] : "22", SOCK_STREAM, &bind);
-  if (!server)
+  signal(SIGINT, &signal_handler);
+  if (!(server = create_connection("0.0.0.0", av[1] ? av[1] : "22",
+                                   SOCK_STREAM, &bind)))
     return (1);
   if (listen(server->socket, MAX_CLIENTS) == -1)
     perror("listen");
   printf("server: waiting for connections...\n");
-  while (1)
+  while (!g_quit)
     {
       if (!(client = accept_connection(server->socket)))
         continue ;
@@ -53,4 +65,3 @@ int	main(UNSEDP int ac, UNSEDP char **av)
   close_connection(server);
   return (0);
 }
-
