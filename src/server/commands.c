@@ -21,11 +21,9 @@ void	noop(t_fclient *client, UNSEDP char **args)
 void	list(t_fclient *client, char **args)
 {
   if (args[1] != NULL && !switch_paths(client->basedir, &(args[1])))
-    {
-      write_sock("ls: No such file or directory\n", client->net->socket, -1);
-      return ;
-    }
-  ls_base(&(args[1]), client->net->socket);
+    write_sock("ls: No such file or directory\n", client->net->socket, -1);
+  else
+    ls_base(&(args[1]), client->net->socket);
 }
 
 void	cd(t_fclient *client, char **args)
@@ -34,7 +32,7 @@ void	cd(t_fclient *client, char **args)
     write_sock("cd require one argument\n", client->net->socket, -1);
   else if (!switch_paths(client->basedir, &(args[1])))
     write_sock("cd: No such file or directory\n", client->net->socket, -1);
-  else if (!(cd_base(&(args[1]), client->net->socket)))
+  else if (!(cd_base(&(args[1]), client->basedir, client->net->socket)))
     {
       free(client->currdir);
       client->currdir = get_pwd();

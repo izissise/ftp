@@ -52,6 +52,6 @@ char	**str_wt(const char *str, const char *sepa);
 void	write_sock(const char *str, int socket, int strlen);
 
 void	ls_base(char **argv, int out);
-int	cd_base(char **argv, int out);
+int	cd_base(char **argv, char *basedir, int out);
 
 #endif /* !STR_H_INCLUDED */
