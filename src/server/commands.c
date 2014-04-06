@@ -54,3 +54,9 @@ void	pwd(t_fclient *client, UNSEDP char **args)
   write_sock(buff, client->net->socket, -1);
   free(tmp);
 }
+
+void	quit(t_fclient *client, UNSEDP char **args)
+{
+  client->quit = 1;
+  write_sock("221 Goodbye.\n", client->net->socket, -1);
+}

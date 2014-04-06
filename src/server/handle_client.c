@@ -16,7 +16,7 @@ static t_strfunc	cmds[] = {
   {"GET", &noop},
   {"PUT", &noop},
   {"PWD", &pwd},
-  {"QUIT", &noop},
+  {"QUIT", &quit},
   {"USER", &noop},
   {"PASS", &noop},
   {"NOOP", &noop}
@@ -50,7 +50,7 @@ void	handle_clients(t_fclient *client)
   char	**args;
 
   write_sock("Welcome !\nType HELP for help.\n", client->net->socket, -1);
-  while ((line = get_next_line(client->net->socket)) && !(client->quit))
+  while (!(client->quit) && (line = get_next_line(client->net->socket)))
     {
       if ((args = str_wt(line, " ")))
         (client_commands(args[0]))(client, args);
