@@ -64,3 +64,15 @@ char	*path_to_bd_path(char *basepath, char *path)
     }
   return (abspath);
 }
+
+int	switch_paths(char *basepath, char **path)
+{
+  char	*tmp;
+
+  tmp = path_to_bd_path(basepath, *path);
+  if (!tmp)
+    return (0);
+  swap_ptr((void**)(path), (void**)&tmp);
+  free(tmp);
+  return (1);
+}
