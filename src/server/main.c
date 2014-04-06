@@ -14,17 +14,23 @@ void		new_client(t_net *server, t_net *client)
 {
   t_fclient	fcli;
   pid_t		tmp;
+  char		*ip;
 
   tmp = fork();
   if (tmp == 0)
     {
       close_connection(server);
+      if ((ip = get_ip_addr(client)))
+        printf("client connected %s:%d\n", ip, port_number(client));
       fcli.net = client;
       fcli.pasv = NULL;
       fcli.basedir = get_pwd();
       fcli.currdir = strdup(fcli.basedir);
       fcli.quit = 0;
       handle_clients(&fcli);
+      if (ip)
+        printf("client disconnected %s:%d\n", ip, port_number(client));
+      free(ip);
       close_connection(client);
       exit(0);
     }
@@ -59,3 +65,4 @@ int	main(UNSEDP int ac, UNSEDP char **av)
   close_connection(server);
   return (0);
 }
+
