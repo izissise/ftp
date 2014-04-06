@@ -39,3 +39,18 @@ void	cd(t_fclient *client, char **args)
     }
 }
 
+void	pwd(t_fclient *client, UNSEDP char **args)
+{
+  char	*tmp;
+  char	buff[READ_SIZE];
+  int	i;
+
+  i = 0;
+  if (!(tmp = get_pwd()))
+    return ;
+  while ((tmp[i] == client->basedir[i]) && tmp[i])
+    ++i;
+  snprintf(buff, sizeof(buff), "/%s\n", &(tmp[i + (tmp[i] == '/')]));
+  write_sock(buff, client->net->socket, -1);
+  free(tmp);
+}
