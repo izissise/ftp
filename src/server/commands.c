@@ -24,23 +24,26 @@ void	list(t_fclient *client, char **args)
 
   if (args[1] != NULL)
     {
-      tmp = is_path_out(client->basedir, args[1]);
-      if (tmp)
+      tmp = path_to_bd_path(client->basedir, args[1]);
+      if (!tmp)
         {
-          write_sock("ls: Invalid path\n", client->net->socket, -1);
+          write_sock("ls: No such file or directory\n",
+                     client->net->socket, -1);
           return ;
         }
       swap_ptr((void**)(&(args[1])), (void**)&tmp);
       free(tmp);
+      ls_base(&(args[1]), client->net->socket);
     }
-  ls_base(&(args[1]), client->net->socket);
+  else
+    ls_base(&(args[1]), client->net->socket);
 }
 
 void	cd(t_fclient *client, char **args)
 {
   if (ptr_tab_size((void**)args) != 2)
     write_sock("cd require 1 argument\n", client->net->socket, -1);
-  else if (is_path_out(client->basedir, args[1]))
+  else if (path_to_bd_path(client->basedir, args[1]))
     write_sock("cd: Invalid path\n", client->net->socket, -1);
   else if (!(cd_base(&(args[1]), client->net->socket)))
     {

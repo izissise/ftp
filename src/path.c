@@ -32,7 +32,19 @@ char	*get_pwd()
   return (res);
 }
 
-char	*is_path_out(char *basepath, char *path)
+int	is_path_out(char *basepath, char *path)
+{
+  char	*abspath;
+
+  abspath = abs_path(path);
+  if ((abspath == NULL) || (basepath == NULL))
+    return (1);
+  if (strncmp(basepath, abspath, strlen(basepath)))
+    return (1);
+  return (0);
+}
+
+char	*path_to_bd_path(char *basepath, char *path)
 {
   char	*abspath;
   char	*tmppath;
@@ -47,10 +59,8 @@ char	*is_path_out(char *basepath, char *path)
     return (NULL);
   if (strncmp(basepath, abspath, strlen(basepath)))
     {
-      printf("%s\n", abspath);
       free(abspath);
-      return (NULL);
+      return (strdup(basepath));
     }
-  printf("%s\n", abspath);
   return (abspath);
 }

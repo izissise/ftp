@@ -33,7 +33,8 @@ typedef struct	s_strfunc
 
 char	*get_pwd();
 char	*abs_path(char *currpath);
-char	*is_path_out(char *basepath, char *path);
+int	is_path_out(char *basepath, char *path);
+char	*path_to_bd_path(char *basepath, char *path);
 
 int	ptr_tab_size(void **tab);
 void	**add_ptr_t_tab(void **tab, void *add);
