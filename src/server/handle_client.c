@@ -11,15 +11,15 @@
 #include "server.h"
 
 static t_strfunc	cmds[] = {
+  {"NOOP", &noop},
   {"LIST", &list},
   {"CWD", &cd},
-  {"GET", &noop},
-  {"PUT", &noop},
   {"PWD", &pwd},
   {"QUIT", &quit},
+  {"GET", &get},
+  {"PUT", &noop},
   {"USER", &noop},
-  {"PASS", &noop},
-  {"NOOP", &noop}
+  {"PASS", &noop}
 };
 
 void	unknow_cmd(t_fclient *client, char **args)

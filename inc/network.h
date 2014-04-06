@@ -37,6 +37,8 @@ t_net		*create_connection(const char *host, const char *port,
                                socklen_t addrlen));
 void		close_connection(t_net *net);
 t_net	*accept_connection(int sockfd);
-void		*get_ip_addr(t_net *net);
+char		*get_ip_addr(t_net *net);
+const char	*listening_ip(int domain);
+int		port_number(t_net *net);
 
 #endif /* !NETWORK_H_INCLUDED */

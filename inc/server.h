@@ -32,5 +32,8 @@ void	list(t_fclient *client, char **args);
 void	cd(t_fclient *client, char **args);
 void	pwd(t_fclient *client, UNSEDP char **args);
 void	quit(t_fclient *client, UNSEDP char **args);
+void	get(t_fclient *client, char **args);
+
+t_net	*create_passive_connection(t_fclient *client);
 
 #endif /* !SERVER_H_INCLUDED */

@@ -36,14 +36,19 @@ int	main(UNSEDP int ac, UNSEDP char **av)
 {
   t_net	*server;
   t_net	*client;
+  char	*ip;
 
   signal(SIGCHLD, SIG_IGN);
-  if (!(server = create_connection("0.0.0.0", av[1] ? av[1] : "22",
+  if (!(server = create_connection(listening_ip(AF_INET), av[1] ? av[1] : "22",
                                    SOCK_STREAM, &bind)))
     return (1);
   if (listen(server->socket, MAX_CLIENTS) == -1)
     perror("listen");
-  printf("server: waiting for connections...\n");
+  ip = get_ip_addr(server);
+  if (ip)
+    printf("server %s:%d : waiting for connections...\n", ip,
+           port_number(server));
+  free(ip);
   while (1)
     {
       if (!(client = accept_connection(server->socket)))

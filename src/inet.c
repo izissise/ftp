@@ -10,18 +10,22 @@
 
 #include "network.h"
 
-void		*get_ip_addr(t_net *net)
+char		*get_ip_addr(t_net *net)
 {
   struct sockaddr	*sa;
+  void		*res;
+  char		buff[4096];
 
   if (!net)
     return (NULL);
   sa = (struct sockaddr*)(&(net->addr));
   if (sa->sa_family == AF_INET)
-    return (&(((struct sockaddr_in*)sa)->sin_addr));
+    res = (&(((struct sockaddr_in*)sa)->sin_addr));
   else if (sa->sa_family == AF_INET6)
-    return (&(((struct sockaddr_in6*)sa)->sin6_addr));
-  return (NULL);
+    res = (&(((struct sockaddr_in6*)sa)->sin6_addr));
+  inet_ntop(((struct sockaddr*)(&(net->addr)))->sa_family,
+            res, buff, sizeof(buff));
+  return (strdup(buff));
 }
 
 int		use_ipsocket(t_net *net, struct addrinfo *tmp,

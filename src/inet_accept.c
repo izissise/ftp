@@ -10,6 +10,29 @@
 
 #include "network.h"
 
+const char	*listening_ip(int domain)
+{
+  if (domain == AF_INET)
+    return ("0.0.0.0");
+  else if (domain == AF_INET6)
+    return ("::1");
+  return (NULL);
+}
+
+int		port_number(t_net *net)
+{
+  in_port_t		port;
+  struct sockaddr	*addr;
+
+  addr = (struct sockaddr*)(&(net->addr));
+  port = 0;
+  if (addr->sa_family == AF_INET)
+    port = (((struct sockaddr_in*)addr)->sin_port);
+  else if (addr->sa_family == AF_INET6)
+    port = (((struct sockaddr_in6*)addr)->sin6_port);
+  return (ntohs(port));
+}
+
 t_net	*accept_connection(int sockfd)
 {
   t_net	*res;
