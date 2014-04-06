@@ -25,7 +25,7 @@ int		port_number(t_net *net)
   struct sockaddr	*addr;
 
   addr = (struct sockaddr*)(&(net->addr));
-  port = 0;
+  port = -1;
   if (addr->sa_family == AF_INET)
     port = (((struct sockaddr_in*)addr)->sin_port);
   else if (addr->sa_family == AF_INET6)

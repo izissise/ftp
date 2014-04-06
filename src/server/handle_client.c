@@ -16,6 +16,7 @@ static t_strfunc	cmds[] = {
   {"CWD", &cd},
   {"PWD", &pwd},
   {"QUIT", &quit},
+  {"PASV", &pasv},
   {"GET", &get},
   {"PUT", &noop},
   {"USER", &noop},

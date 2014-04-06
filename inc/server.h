@@ -20,6 +20,7 @@
 typedef struct	s_fclient
 {
   t_net		*net;
+  t_net		*pasv;
   char		*basedir;
   char		*currdir;
   int		quit;
@@ -33,7 +34,9 @@ void	cd(t_fclient *client, char **args);
 void	pwd(t_fclient *client, UNSEDP char **args);
 void	quit(t_fclient *client, UNSEDP char **args);
 void	get(t_fclient *client, char **args);
+void	pasv(t_fclient *client, char **args);
 
 t_net	*create_passive_connection(t_fclient *client);
+char	*calculate_pasvconnection_info(char *addr, int port);
 
 #endif /* !SERVER_H_INCLUDED */

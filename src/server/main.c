@@ -20,6 +20,7 @@ void		new_client(t_net *server, t_net *client)
     {
       close_connection(server);
       fcli.net = client;
+      fcli.pasv = NULL;
       fcli.basedir = get_pwd();
       fcli.currdir = strdup(fcli.basedir);
       fcli.quit = 0;
