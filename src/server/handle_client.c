@@ -57,4 +57,5 @@ void	handle_clients(t_fclient *client)
         (client_commands(args[0]))(client, args);
       free(line);
     }
+    if ()
 }

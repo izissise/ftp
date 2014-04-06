@@ -33,7 +33,7 @@ void	pasv(t_fclient *client, UNSEDP char **args)
       client->pasv = NULL;
       return ;
     }
-  snprintf(buff, sizeof(buff), "227 Entering Passive Mode (%s)", info);
+  snprintf(buff, sizeof(buff), "227 Entering Passive Mode (%s)\n", info);
   free(ip);
   free(info);
   write_sock(buff, client->net->socket, - 1);
