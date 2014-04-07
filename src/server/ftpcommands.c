@@ -14,7 +14,7 @@ void	pasv(t_fclient *client, UNSEDP char **args)
 {
   char	*info;
   t_net	*tmp;
-  char	buff[READ_SIZE];
+  char	buff[BUFSIZ];
 
   if (((client->pasv = create_passive_connection(client)) == NULL)
       || (info = calculate_epsvconnection_info(client->pasv)) == NULL)

@@ -18,7 +18,6 @@
 # include <unistd.h>
 # include <errno.h>
 
-# define READ_SIZE 4096
 # define UNSEDP __attribute__((unused))
 # define PTRT_PACK 10
 

@@ -52,7 +52,7 @@ void			print_file(char *file, char *filena, char *buff)
   struct group	*gr;
 
   if (lstat(file, &stats) == -1)
-    snprintf(buff, READ_SIZE, "%s %s\n", filena, strerror(errno));
+    snprintf(buff, BUFSIZ, "%s %s\n", filena, strerror(errno));
   else
     {
       user = "???";
@@ -63,10 +63,10 @@ void			print_file(char *file, char *filena, char *buff)
         group = gr->gr_name;
       get_perm(stats.st_mode, perm);
       if (perm[0] == 'd')
-        snprintf(buff, READ_SIZE, "%s %s %s \033[34m%s/\033[m\n", perm,
+        snprintf(buff, BUFSIZ, "%s %s %s \033[34m%s/\033[m\n", perm,
                  user, group, filena);
       else
-        snprintf(buff, READ_SIZE, "%s %s %s %s\n", perm, user, group, filena);
+        snprintf(buff, BUFSIZ, "%s %s %s %s\n", perm, user, group, filena);
     }
 }
 
@@ -74,9 +74,9 @@ void		ls_base(char **argv, int out)
 {
   DIR		*rep;
   struct dirent	*curr_file;
-  char		buff[READ_SIZE];
+  char		buff[BUFSIZ];
   char		*dir;
-  char		file[READ_SIZE];
+  char		file[BUFSIZ];
 
   if ((dir = argv[0]) == NULL)
     dir = ".";

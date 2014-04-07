@@ -14,7 +14,7 @@ int	cd_base(char **argv, char *basedir, int out)
 {
   char	*tmp;
   int	i;
-  char	buff[READ_SIZE];
+  char	buff[BUFSIZ];
 
   i = 0;
   if (chdir(argv[0]))

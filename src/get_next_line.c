@@ -69,7 +69,7 @@ void	my_shiftleft_tab(char *str, int n)
 
 char		*get_next_line(const int fd)
 {
-  static char	buffer[READ_SIZE];
+  static char	buffer[BUFSIZ];
   static int	index = 0;
   int		nbread;
   char		*res;
@@ -90,7 +90,7 @@ char		*get_next_line(const int fd)
             }
           res = my_stradd(res, buffer, index);
         }
-      nbread = read(fd, buffer, READ_SIZE);
+      nbread = read(fd, buffer, BUFSIZ);
       index = nbread;
     }
   return (res);

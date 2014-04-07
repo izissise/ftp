@@ -12,9 +12,9 @@
 
 void	noop(t_fclient *client, UNSEDP char **args)
 {
-  char	buff[READ_SIZE];
+  char	buff[BUFSIZ];
 
-  snprintf(buff, READ_SIZE, "%s\n", "200 NOOP ok.");
+  snprintf(buff, sizeof(buff), "%s\n", "200 NOOP ok.");
   write_sock(buff, client->net->socket, -1);
 }
 
@@ -42,7 +42,7 @@ void	cd(t_fclient *client, char **args)
 void	pwd(t_fclient *client, UNSEDP char **args)
 {
   char	*tmp;
-  char	buff[READ_SIZE];
+  char	buff[BUFSIZ];
   int	i;
 
   i = 0;

@@ -27,9 +27,9 @@ static t_strfunc	cmds[] = {
 
 void	unknow_cmd(t_fclient *client, char **args)
 {
-  char	buff[READ_SIZE];
+  char	buff[BUFSIZ];
 
-  snprintf(buff, READ_SIZE, "%s: unknow commands\n", args[0]);
+  snprintf(buff, sizeof(buff), "%s: unknow commands\n", args[0]);
   write_sock(buff, client->net->socket, -1);
 }
 
