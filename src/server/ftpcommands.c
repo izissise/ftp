@@ -38,6 +38,7 @@ void	pasv(t_fclient *client, UNSEDP char **args)
   client->pasv = tmp;
   write_sock("Hello there\n", client->pasv->socket, -1);
   close_connection(client->pasv);
+  client->pasv = NULL;
 }
 
 void	get(t_fclient *client, UNSEDP char **args)

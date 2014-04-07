@@ -33,13 +33,23 @@ int		use_ipsocket(t_net *net, struct addrinfo *tmp,
                             socklen_t addrlen))
 {
   int		ret;
+
+  ret = 0;
   memcpy(&(net->addr), tmp->ai_addr, tmp->ai_addrlen);
   net->addr.ss_family = tmp->ai_addr->sa_family;
   net->socktype = tmp->ai_socktype;
   net->addrlen = tmp->ai_addrlen;
-  ret = f(net->socket, (struct sockaddr*)(&(net->addr)), net->addrlen);
+  if (f)
+    ret = f(net->socket, (struct sockaddr*)(&(net->addr)), net->addrlen);
   if (ret == -1)
     close(net->socket);
+  if (f && (getsockname(net->socket, (struct sockaddr*)(&(net->addr)),
+                        &(net->addrlen))) == -1)
+    {
+      perror("getsockname");
+      ret = -1;
+      close(net->socket);
+    }
   return (ret);
 }
 
@@ -63,7 +73,7 @@ int				ipaddress_init(const char *ip, const char *port,
   while (tmp)
     {
       net->socket = socket(tmp->ai_family, tmp->ai_socktype, tmp->ai_protocol);
-      if (!((net->socket == -1) || ((ret = use_ipsocket(net, tmp, f)) != -1)))
+      if (!((net->socket == -1) || ((ret = use_ipsocket(net, tmp, f)) == -1)))
         break;
       tmp = tmp->ai_next;
     }

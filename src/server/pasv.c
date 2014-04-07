@@ -58,7 +58,7 @@ t_net		*create_passive_connection(t_fclient *client)
 
   addr = (struct sockaddr*)(&(client->net->addr));
   if ((res = create_connection(listening_ip(addr->sa_family),
-                               "0", SOCK_STREAM, &bind)) == NULL)
+                               NULL, SOCK_STREAM, &bind)) == NULL)
     return (NULL);
   if (listen(res->socket, 1) == -1)
     {
