@@ -38,5 +38,6 @@ void	pasv(t_fclient *client, char **args);
 
 t_net	*create_passive_connection(t_fclient *client);
 char	*calculate_pasvconnection_info(t_net *net);
+char	*calculate_epsvconnection_info(t_net *net);
 
 #endif /* !SERVER_H_INCLUDED */

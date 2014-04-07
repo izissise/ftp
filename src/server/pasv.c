@@ -9,6 +9,7 @@
 */
 
 #include "server.h"
+#include <stdio.h>
 
 char	*calculate_pasvconnection_info(t_net *net)
 {
@@ -39,6 +40,17 @@ char	*calculate_pasvconnection_info(t_net *net)
   return (tmp);
 }
 
+char	*calculate_epsvconnection_info(t_net *net)
+{
+  int	port;
+  char	buff[BUFSIZ];
+
+  if ((port = port_number(net)))
+    return (NULL);
+  snprintf(buff, sizeof(buff), "|||%d|", port);
+  return (strdup(buff));
+}
+
 t_net		*create_passive_connection(t_fclient *client)
 {
   t_net		*res;
@@ -46,8 +58,7 @@ t_net		*create_passive_connection(t_fclient *client)
 
   addr = (struct sockaddr*)(&(client->net->addr));
   if ((res = create_connection(listening_ip(addr->sa_family),
-                               NULL, SOCK_STREAM, &bind)) == NULL)
+                               "0", SOCK_STREAM, &bind)) == NULL)
     return (NULL);
   return (res);
 }
-
