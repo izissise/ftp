@@ -13,12 +13,13 @@
 void	pasv(t_fclient *client, UNSEDP char **args)
 {
   char	*info;
+  t_net	*tmp;
   char	buff[READ_SIZE];
 
-  client->pasv = create_passive_connection(client);
-  if ((info = calculate_epsvconnection_info(client->pasv)) == NULL)
+  if (((client->pasv = create_passive_connection(client)) == NULL)
+      || (info = calculate_epsvconnection_info(client->pasv)) == NULL)
     {
-      write_sock("Can't create pasv connection.\n", client->net->socket, - 1);
+      write_sock("Can't create epsv connection.\n", client->net->socket, - 1);
       close_connection(client->pasv);
       client->pasv = NULL;
       return ;
@@ -27,6 +28,16 @@ void	pasv(t_fclient *client, UNSEDP char **args)
            info);
   free(info);
   write_sock(buff, client->net->socket, - 1);
+  if ((tmp = accept_connection(client->pasv->socket)) == NULL)
+    {
+      close_connection(client->pasv);
+      client->pasv = NULL;
+      return ;
+    }
+  close_connection(client->pasv);
+  client->pasv = tmp;
+  write_sock("Hello there\n", client->pasv->socket, -1);
+  close_connection(client->pasv);
 }
 
 void	get(t_fclient *client, UNSEDP char **args)

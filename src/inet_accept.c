@@ -25,12 +25,12 @@ int		port_number(t_net *net)
   struct sockaddr	*addr;
 
   addr = (struct sockaddr*)(&(net->addr));
-  port = -1;
+  port = 0;
   if (addr->sa_family == AF_INET)
     port = (((struct sockaddr_in*)addr)->sin_port);
   else if (addr->sa_family == AF_INET6)
     port = (((struct sockaddr_in6*)addr)->sin6_port);
-  return (ntohs(port));
+  return ((port == 0) ? 0 : ntohs(port));
 }
 
 t_net	*accept_connection(int sockfd)

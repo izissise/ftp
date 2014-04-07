@@ -22,7 +22,7 @@ char	*calculate_pasvconnection_info(t_net *net)
   i = 0;
   tmp = NULL;
   ip = NULL;
-  if ((port = port_number(net)) || (ip = get_ip_addr(net))
+  if (!(port = port_number(net)) || (ip = get_ip_addr(net))
       || !(len = (strlen(ip) + 12))
       || ((tmp = malloc(len * sizeof(char))) == NULL))
     {
@@ -45,7 +45,7 @@ char	*calculate_epsvconnection_info(t_net *net)
   int	port;
   char	buff[BUFSIZ];
 
-  if ((port = port_number(net)))
+  if ((port = port_number(net)) == 0)
     return (NULL);
   snprintf(buff, sizeof(buff), "|||%d|", port);
   return (strdup(buff));
@@ -60,5 +60,11 @@ t_net		*create_passive_connection(t_fclient *client)
   if ((res = create_connection(listening_ip(addr->sa_family),
                                "0", SOCK_STREAM, &bind)) == NULL)
     return (NULL);
+  if (listen(res->socket, 1) == -1)
+    {
+      perror("listen");
+      close_connection(res);
+      res = NULL;
+    }
   return (res);
 }
