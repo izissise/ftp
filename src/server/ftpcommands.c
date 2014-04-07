@@ -12,21 +12,11 @@
 
 void	pasv(t_fclient *client, UNSEDP char **args)
 {
-  char	*ip;
-  int	port;
   char	*info;
   char	buff[READ_SIZE];
 
   client->pasv = create_passive_connection(client);
-  ip = get_ip_addr(client->pasv);
-  port = port_number(client->pasv);
-  if ((port == -1) || (ip == NULL))
-    {
-      close_connection(client->pasv);
-      client->pasv = NULL;
-      return ;
-    }
-  info = calculate_pasvconnection_info(ip, port);
+  info = calculate_pasvconnection_info(client->pasv);
   if (info == NULL)
     {
       close_connection(client->pasv);
@@ -34,7 +24,6 @@ void	pasv(t_fclient *client, UNSEDP char **args)
       return ;
     }
   snprintf(buff, sizeof(buff), "227 Entering Passive Mode (%s)\n", info);
-  free(ip);
   free(info);
   write_sock(buff, client->net->socket, - 1);
 }

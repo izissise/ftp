@@ -10,25 +10,32 @@
 
 #include "server.h"
 
-char	*calculate_pasvconnection_info(char *addr, int port)
+char	*calculate_pasvconnection_info(t_net *net)
 {
   char	*tmp;
   int	i;
   int	len;
+  char	*ip;
+  int	port;
 
   i = 0;
-  len = (strlen(addr) + 12);
-  if ((tmp = malloc(len * sizeof(char))) == NULL)
-    return (NULL);
-  while (addr[i])
+  tmp = NULL;
+  ip = NULL;
+  if ((port = port_number(net)) || (ip = get_ip_addr(net))
+      || !(len = (strlen(ip) + 12))
+      || ((tmp = malloc(len * sizeof(char))) == NULL))
     {
-      if (addr[i] == '.')
-        tmp[i] = ',';
-      else
-        tmp[i] = addr[i];
+      free(tmp);
+      free(ip);
+      return (NULL);
+    }
+  while (ip[i])
+    {
+      tmp[i] = (ip[i] == '.') ? ',' : ip[i];
       i++;
     }
   snprintf(&(tmp[i]), len - i, ",%d,%d", port / 256, port % 256);
+  free(ip);
   return (tmp);
 }
 
@@ -43,3 +50,4 @@ t_net		*create_passive_connection(t_fclient *client)
     return (NULL);
   return (res);
 }
+
