@@ -29,7 +29,7 @@ void	unknow_cmd(t_fclient *client, char **args)
 {
   char	buff[BUFSIZ];
 
-  snprintf(buff, sizeof(buff), "%s: unknow commands\n", args[0]);
+  snprintf(buff, sizeof(buff), "500 %s: unknow commands\n", args[0]);
   write_sock(buff, client->net->socket, -1);
 }
 
@@ -52,7 +52,7 @@ void	handle_clients(t_fclient *client)
   char	*line;
   char	**args;
 
-  write_sock("Welcome !\nType HELP for help.\n", client->net->socket, -1);
+  write_sock("220 Welcome !\nType HELP for help.\n", client->net->socket, -1);
   while (!(client->quit) && (line = get_next_line(client->net->socket)))
     {
       if ((args = str_wt(line, " ")))

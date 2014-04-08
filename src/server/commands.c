@@ -20,10 +20,21 @@ void	noop(t_fclient *client, UNSEDP char **args)
 
 void	list(t_fclient *client, char **args)
 {
+  if (client->pasv == NULL)
+    {
+      write_sock("425 Use EPSV first.\n", client->net->socket, - 1);
+      return ;
+    }
+  accept_passive_connection(client);
+  write_sock("150 Here comes the directory listing.\n",
+             client->net->socket, -1);
   if (args[1] != NULL && !switch_paths(client->basedir, &(args[1])))
-    write_sock("ls: No such file or directory\n", client->net->socket, -1);
+    write_sock("ls: No such file or directory\n", client->pasv->socket, -1);
   else
-    ls_base(&(args[1]), client->net->socket);
+    ls_base(&(args[1]), client->pasv->socket);
+  close_connection(client->pasv);
+  client->pasv = NULL;
+  write_sock("226 Directory send OK.\n", client->net->socket, -1);
 }
 
 void	cd(t_fclient *client, char **args)
@@ -50,7 +61,7 @@ void	pwd(t_fclient *client, UNSEDP char **args)
     return ;
   while ((tmp[i] == client->basedir[i]) && tmp[i])
     ++i;
-  snprintf(buff, sizeof(buff), "/%s\n", &(tmp[i + (tmp[i] == '/')]));
+  snprintf(buff, sizeof(buff), "257 \"/%s\"\n", &(tmp[i + (tmp[i] == '/')]));
   write_sock(buff, client->net->socket, -1);
   free(tmp);
 }

@@ -68,3 +68,18 @@ t_net		*create_passive_connection(t_fclient *client)
     }
   return (res);
 }
+
+void		accept_passive_connection(t_fclient *client)
+{
+  t_net	*tmp;
+
+  if ((client->pasv == NULL)
+      || (tmp = accept_connection(client->pasv->socket)) == NULL)
+    {
+      close_connection(client->pasv);
+      client->pasv = NULL;
+      return ;
+    }
+  close_connection(client->pasv);
+  client->pasv = tmp;
+}

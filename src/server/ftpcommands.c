@@ -13,7 +13,6 @@
 void	pasv(t_fclient *client, UNSEDP char **args)
 {
   char	*info;
-  t_net	*tmp;
   char	buff[BUFSIZ];
 
   if (((client->pasv = create_passive_connection(client)) == NULL)
@@ -28,17 +27,6 @@ void	pasv(t_fclient *client, UNSEDP char **args)
            info);
   free(info);
   write_sock(buff, client->net->socket, - 1);
-  if ((tmp = accept_connection(client->pasv->socket)) == NULL)
-    {
-      close_connection(client->pasv);
-      client->pasv = NULL;
-      return ;
-    }
-  close_connection(client->pasv);
-  client->pasv = tmp;
-  write_sock("Hello there\n", client->pasv->socket, -1);
-  close_connection(client->pasv);
-  client->pasv = NULL;
 }
 
 void	get(t_fclient *client, UNSEDP char **args)
