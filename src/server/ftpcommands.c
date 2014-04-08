@@ -10,7 +10,7 @@
 
 #include "server.h"
 
-void	pasv(t_fclient *client, UNSEDP char **args)
+void	pasv(t_fclient *client, UNSEDP char *arg)
 {
   char	*info;
   char	buff[BUFSIZ];
@@ -29,6 +29,6 @@ void	pasv(t_fclient *client, UNSEDP char **args)
   write_sock(buff, client->net->socket, - 1);
 }
 
-void	get(t_fclient *client, UNSEDP char **args)
+void	get(t_fclient *client, UNSEDP char *arg)
 {
 }

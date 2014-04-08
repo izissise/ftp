@@ -73,6 +73,5 @@ int	switch_paths(char *basepath, char **path)
   if (!tmp)
     return (0);
   swap_ptr((void**)(path), (void**)&tmp);
-  free(tmp);
   return (1);
 }

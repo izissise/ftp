@@ -27,6 +27,7 @@ SRCSERVER	=	server/main.c \
 			server/handle_client.c \
 			server/ftpcommands.c \
 			server/commands.c \
+			server/authcommands.c \
 			server/pasv.c
 
 SRCCLIENT	+=	$(SRC)

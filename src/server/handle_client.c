@@ -21,15 +21,18 @@ static t_strfunc	cmds[] = {
   {"SPSV", &pasv},
   {"GET", &get},
   {"PUT", &noop},
-  {"USER", &noop},
-  {"PASS", &noop}
+  {"USER", &user},
+  {"PASS", &pass}
 };
 
-void	unknow_cmd(t_fclient *client, char **args)
+void	unknow_cmd(t_fclient *client, char *arg)
 {
   char	buff[BUFSIZ];
 
-  snprintf(buff, sizeof(buff), "500 %s: unknow commands\n", args[0]);
+  if (client->logged)
+    snprintf(buff, sizeof(buff), "500 %s: unknow commands\n", arg);
+  else
+    snprintf(buff, sizeof(buff), "530 Please login with USER and PASS.\n");
   write_sock(buff, client->net->socket, -1);
 }
 
@@ -47,16 +50,31 @@ void	(*client_commands(char *command))()
   return (&unknow_cmd);
 }
 
+char	*find_arguments(char *line)
+{
+  int	i;
+
+  i = 0;
+  while (line[i] && line[i] != ' ')
+    ++i;
+  if (line[i] == ' ')
+    line[i] = '\0';
+  else
+    --i;
+  return (&(line[i + 1]));
+}
+
 void	handle_clients(t_fclient *client)
 {
   char	*line;
-  char	**args;
+  char	*arg;
 
   write_sock("220 Welcome !\nType HELP for help.\n", client->net->socket, -1);
   while (!(client->quit) && (line = get_next_line(client->net->socket)))
     {
-      if ((args = str_wt(line, " ")))
-        (client_commands(args[0]))(client, args);
+      arg = strdup(find_arguments(line));
+      (client_commands(line))(client, arg);
+      free(arg);
       free(line);
     }
   if (client->pasv)

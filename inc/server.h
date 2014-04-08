@@ -23,18 +23,22 @@ typedef struct	s_fclient
   t_net		*pasv;
   char		*basedir;
   char		*currdir;
+  char		*user;
+  int		logged;
   int		quit;
 }		t_fclient;
 
 void	handle_clients(t_fclient *client);
 
-void	noop(t_fclient *client, UNSEDP char **args);
-void	list(t_fclient *client, char **args);
-void	cd(t_fclient *client, char **args);
-void	pwd(t_fclient *client, UNSEDP char **args);
-void	quit(t_fclient *client, UNSEDP char **args);
-void	get(t_fclient *client, char **args);
-void	pasv(t_fclient *client, char **args);
+void	noop(t_fclient *client, UNSEDP char *arg);
+void	list(t_fclient *client, char *arg);
+void	cd(t_fclient *client, char *arg);
+void	pwd(t_fclient *client, UNSEDP char *arg);
+void	quit(t_fclient *client, UNSEDP char *arg);
+void	get(t_fclient *client, char *arg);
+void	pasv(t_fclient *client, char *arg);
+void	user(t_fclient *client, char *arg);
+void	pass(t_fclient *client, char *arg);
 
 t_net	*create_passive_connection(t_fclient *client);
 char	*calculate_pasvconnection_info(t_net *net);

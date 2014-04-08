@@ -10,26 +10,40 @@
 
 #include "server.h"
 
+void	init_client(t_fclient *fcli)
+{
+  fcli->pasv = NULL;
+  fcli->user = NULL;
+  fcli->basedir = get_pwd();
+  fcli->currdir = fcli->basedir ? strdup(fcli->basedir) : NULL;
+  fcli->quit = 0;
+  fcli->logged = 0;
+}
+
+void	destroy_client(t_fclient *fcli)
+{
+  free(fcli->basedir);
+  free(fcli->currdir);
+  free(fcli->user);
+}
+
 void		new_client(t_net *server, t_net *client)
 {
   t_fclient	fcli;
   pid_t		tmp;
   char		*ip;
 
-  tmp = fork();
-  if (tmp == 0)
+  if ((tmp = fork()) == 0)
     {
       close_connection(server);
-      if ((ip = get_ip_addr(client)))
-        printf("client connected %s:%d\n", ip, port_number(client));
+      printf("client connected %s:%d\n",
+             (ip = get_ip_addr(client)) ? ip : "unknow", port_number(client));
       fcli.net = client;
-      fcli.pasv = NULL;
-      fcli.basedir = get_pwd();
-      fcli.currdir = strdup(fcli.basedir);
-      fcli.quit = 0;
+      init_client(&fcli);
       handle_clients(&fcli);
-      if (ip)
-        printf("client disconnected %s:%d\n", ip, port_number(client));
+      destroy_client(&fcli);
+      printf("client disconnected %s:%d\n", ip ? ip : "unknow",
+             port_number(client));
       free(ip);
       close_connection(client);
       exit(0);

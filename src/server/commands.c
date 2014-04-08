@@ -10,7 +10,7 @@
 
 #include "server.h"
 
-void	noop(t_fclient *client, UNSEDP char **args)
+void	noop(t_fclient *client, UNSEDP char *arg)
 {
   char	buff[BUFSIZ];
 
@@ -18,8 +18,10 @@ void	noop(t_fclient *client, UNSEDP char **args)
   write_sock(buff, client->net->socket, -1);
 }
 
-void	list(t_fclient *client, char **args)
+void	list(t_fclient *client, char *arg)
 {
+  char	*tmp[2];
+
   if (client->pasv == NULL)
     {
       write_sock("425 Use EPSV first.\n", client->net->socket, - 1);
@@ -28,29 +30,40 @@ void	list(t_fclient *client, char **args)
   accept_passive_connection(client);
   write_sock("150 Here comes the directory listing.\n",
              client->net->socket, -1);
-  if (args[1] != NULL && !switch_paths(client->basedir, &(args[1])))
+  printf("arg: \"%s\"\n", arg);
+  if (arg[0] != '\0' && !switch_paths(client->basedir, &arg))
     write_sock("ls: No such file or directory\n", client->pasv->socket, -1);
   else
-    ls_base(&(args[1]), client->pasv->socket);
+    {
+      tmp[0] = arg;
+      tmp[1] = NULL;
+      ls_base(tmp, client->pasv->socket);
+      free(arg);
+    }
   close_connection(client->pasv);
   client->pasv = NULL;
   write_sock("226 Directory send OK.\n", client->net->socket, -1);
 }
 
-void	cd(t_fclient *client, char **args)
+void	cd(t_fclient *client, char *arg)
 {
-  if (ptr_tab_size((void**)args) != 2)
+  char	*tmp[2];
+
+  tmp[0] = arg;
+  tmp[1] = NULL;
+  if (arg[0] == '\0')
     write_sock("cd require one argument\n", client->net->socket, -1);
-  else if (!switch_paths(client->basedir, &(args[1])))
+  else if (!switch_paths(client->basedir, &(tmp[0])))
     write_sock("cd: No such file or directory\n", client->net->socket, -1);
-  else if (!(cd_base(&(args[1]), client->basedir, client->net->socket)))
+  else if (!(cd_base(tmp, client->basedir, client->net->socket)))
     {
       free(client->currdir);
       client->currdir = get_pwd();
+      free(tmp[0]);
     }
 }
 
-void	pwd(t_fclient *client, UNSEDP char **args)
+void	pwd(t_fclient *client, UNSEDP char *arg)
 {
   char	*tmp;
   char	buff[BUFSIZ];
@@ -66,7 +79,7 @@ void	pwd(t_fclient *client, UNSEDP char **args)
   free(tmp);
 }
 
-void	quit(t_fclient *client, UNSEDP char **args)
+void	quit(t_fclient *client, UNSEDP char *arg)
 {
   client->quit = 1;
   write_sock("221 Goodbye.\n", client->net->socket, -1);
