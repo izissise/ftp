@@ -29,10 +29,10 @@ void	pasv(t_fclient *client, UNSEDP char *arg)
   write_sock(buff, client->net->socket, - 1);
 }
 
-void	get(t_fclient *client, UNSEDP char *arg)
+void	get(t_fclient *client, char *arg)
 {
 }
 
-void	put(t_fclient *client, UNSEDP char *arg)
+void	put(t_fclient *client, char *arg)
 {
 }

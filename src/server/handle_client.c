@@ -20,7 +20,7 @@ static t_strfunc	cmds[] = {
   {"EPSV", &pasv},
   {"SPSV", &pasv},
   {"GET", &get},
-  {"PUT", &noop},
+  {"PUT", &put},
   {"USER", &user},
   {"PASS", &pass}
 };

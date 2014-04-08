@@ -62,6 +62,8 @@ void	cd(t_fclient *client, char *arg)
       free(client->currdir);
       client->currdir = get_pwd();
       free(tmp[0]);
+      write_sock("250 Directory successfully changed.\n",
+                 client->net->socket, -1);
     }
 }
 
