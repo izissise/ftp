@@ -30,6 +30,8 @@ void	pass(t_fclient *client, char *arg)
   ok = 0;
   if (client->user)
     {
+      if (!strcmp(client->user, "ftp") && !strcmp(arg, "ftp"))
+        ok = 1;
       if (ok)
         {
           client->logged = 1;
@@ -41,5 +43,3 @@ void	pass(t_fclient *client, char *arg)
   else
     write_sock("503 Login with USER first.\n", client->net->socket, -1);
 }
-
-

@@ -34,6 +34,7 @@ void	noop(t_fclient *client, char *arg);
 void	list(t_fclient *client, char *arg);
 void	cd(t_fclient *client, char *arg);
 void	pwd(t_fclient *client, char *arg);
+void	type(t_fclient *client, char *arg);
 void	quit(t_fclient *client, char *arg);
 void	get(t_fclient *client, char *arg);
 void	put(t_fclient *client, char *arg);

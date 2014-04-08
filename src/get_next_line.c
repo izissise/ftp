@@ -67,6 +67,20 @@ void	my_shiftleft_tab(char *str, int n)
     }
 }
 
+char	*remove_ms_carriage_return(char *str)
+{
+  int	len;
+
+  if (str)
+    {
+      len = strlen(str);
+      len -= 1;
+      if (len >= 0 && (str[len] == '\r'))
+        str[len] = '\0';
+    }
+  return (str);
+}
+
 char		*get_next_line(const int fd)
 {
   static char	buffer[BUFSIZ];
@@ -86,12 +100,12 @@ char		*get_next_line(const int fd)
               if ((res = my_stradd(res, buffer, nbread)))
                 my_shiftleft_tab(buffer, nbread + 1);
               index = index - nbread - 1;
-              return (res);
+              return (remove_ms_carriage_return(res));
             }
           res = my_stradd(res, buffer, index);
         }
       nbread = read(fd, buffer, BUFSIZ);
       index = nbread;
     }
-  return (res);
+  return (remove_ms_carriage_return(res));
 }
