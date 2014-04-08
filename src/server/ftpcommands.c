@@ -34,6 +34,8 @@ void	pasv(t_fclient *client, UNSEDP char *arg)
   char	*info;
   char	buff[BUFSIZ];
 
+  if (client->pasv)
+    close_connection(client->pasv);
   if (((client->pasv = create_passive_connection(client)) == NULL)
       || (info = calculate_pasvconnection_info(client->pasv)) == NULL)
     {

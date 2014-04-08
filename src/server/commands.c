@@ -32,7 +32,7 @@ void	list(t_fclient *client, char *arg)
   write_sock("150 Here comes the directory listing.\n",
              client->net->socket, -1);
   if (strlen(arg) && !switch_paths(client->basedir, &(tmp[0])))
-    write_sock("ls: No such file or directory\n", client->pasv->socket, -1);
+    write_sock("500 No such file or directory\n", client->pasv->socket, -1);
   else
     {
       if (arg[0] == '\0')
@@ -54,9 +54,9 @@ void	cd(t_fclient *client, char *arg)
   tmp[0] = arg;
   tmp[1] = NULL;
   if (arg[0] == '\0')
-    write_sock("cd require one argument\n", client->net->socket, -1);
+    write_sock("500 require one argument\n", client->net->socket, -1);
   else if (!switch_paths(client->basedir, &(tmp[0])))
-    write_sock("cd: No such file or directory\n", client->net->socket, -1);
+    write_sock("500 No such file or directory\n", client->net->socket, -1);
   else if (!(cd_base(tmp, client->basedir, client->net->socket)))
     {
       free(client->currdir);

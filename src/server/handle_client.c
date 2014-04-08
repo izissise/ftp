@@ -81,6 +81,8 @@ void	handle_clients(t_fclient *client)
           if (client->logged || ((f == &user) || (f == &quit)
                                  || (f == &pass) || (f == &unknow_cmd)))
             f(client, arg);
+          else
+            unknow_cmd(client, arg);
         }
       free(arg);
       free(line);

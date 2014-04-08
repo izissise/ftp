@@ -54,10 +54,10 @@ int		use_ipsocket(t_net *net, struct addrinfo *tmp,
   return (ret);
 }
 
-int				ipaddress_init(const char *ip, const char *port,
-                         t_net *net, int	(*f)(int sockfd,
-                             const struct sockaddr *addr,
-                             socklen_t addrlen))
+int			ipaddress_init(const char *ip, const char *port,
+                       t_net *net, int (*f)(int sockfd,
+                           const struct sockaddr *addr,
+                           socklen_t addrlen))
 {
   struct addrinfo	req;
   struct addrinfo	*res;

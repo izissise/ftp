@@ -22,7 +22,7 @@ char	*calculate_pasvconnection_info(t_net *net)
   i = 0;
   tmp = NULL;
   ip = NULL;
-  if (!(port = port_number(net)) || (ip = get_ip_addr(net))
+  if (!(port = port_number(net)) || !(ip = get_ip_addr(net))
       || !(len = (strlen(ip) + 12))
       || ((tmp = malloc(len * sizeof(char))) == NULL))
     {
