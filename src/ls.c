@@ -91,6 +91,9 @@ void		ls_base(char **argv, int out)
           }
       }
   else
-    write_sock(strerror(errno), out, -1);
+    {
+      snprintf(file, sizeof(file), "%s\n", strerror(errno));
+      write_sock(file, out, -1);
+    }
   closedir(rep);
 }

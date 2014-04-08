@@ -73,7 +73,8 @@ void	handle_clients(t_fclient *client)
   while (!(client->quit) && (line = get_next_line(client->net->socket)))
     {
       arg = strdup(find_arguments(line));
-      (client_commands(line))(client, arg);
+      if (strlen(line))
+        (client_commands(line))(client, arg);
       free(arg);
       free(line);
     }

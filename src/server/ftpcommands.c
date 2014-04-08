@@ -32,3 +32,7 @@ void	pasv(t_fclient *client, UNSEDP char *arg)
 void	get(t_fclient *client, UNSEDP char *arg)
 {
 }
+
+void	put(t_fclient *client, UNSEDP char *arg)
+{
+}

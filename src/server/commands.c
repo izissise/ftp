@@ -22,6 +22,7 @@ void	list(t_fclient *client, char *arg)
 {
   char	*tmp[2];
 
+  tmp[0] = arg;
   if (client->pasv == NULL)
     {
       write_sock("425 Use EPSV first.\n", client->net->socket, - 1);
@@ -30,15 +31,16 @@ void	list(t_fclient *client, char *arg)
   accept_passive_connection(client);
   write_sock("150 Here comes the directory listing.\n",
              client->net->socket, -1);
-  printf("arg: \"%s\"\n", arg);
-  if (arg[0] != '\0' && !switch_paths(client->basedir, &arg))
+  if (strlen(arg) && !switch_paths(client->basedir, &(tmp[0])))
     write_sock("ls: No such file or directory\n", client->pasv->socket, -1);
   else
     {
-      tmp[0] = arg;
+      if (arg[0] == '\0')
+        tmp[0] = NULL;
       tmp[1] = NULL;
       ls_base(tmp, client->pasv->socket);
-      free(arg);
+      if (tmp[0] != arg)
+        free(tmp[0]);
     }
   close_connection(client->pasv);
   client->pasv = NULL;

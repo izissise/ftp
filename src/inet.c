@@ -14,6 +14,7 @@ char		*get_ip_addr(t_net *net)
 {
   struct sockaddr	*sa;
   void		*res;
+  char		*ret;
   char		buff[4096];
 
   if (!net)
@@ -25,7 +26,7 @@ char		*get_ip_addr(t_net *net)
     res = (&(((struct sockaddr_in6*)sa)->sin6_addr));
   inet_ntop(((struct sockaddr*)(&(net->addr)))->sa_family,
             res, buff, sizeof(buff));
-  return (strdup(buff));
+  return ((ret = strdup(buff)) ? ret : strdup("Unknow"));
 }
 
 int		use_ipsocket(t_net *net, struct addrinfo *tmp,
@@ -46,7 +47,6 @@ int		use_ipsocket(t_net *net, struct addrinfo *tmp,
   if (f && (getsockname(net->socket, (struct sockaddr*)(&(net->addr)),
                         &(net->addrlen))) == -1)
     {
-      perror("getsockname");
       ret = -1;
       close(net->socket);
     }

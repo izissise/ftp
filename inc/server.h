@@ -36,6 +36,7 @@ void	cd(t_fclient *client, char *arg);
 void	pwd(t_fclient *client, UNSEDP char *arg);
 void	quit(t_fclient *client, UNSEDP char *arg);
 void	get(t_fclient *client, char *arg);
+void	put(t_fclient *client, UNSEDP char *arg);
 void	pasv(t_fclient *client, char *arg);
 void	user(t_fclient *client, char *arg);
 void	pass(t_fclient *client, char *arg);

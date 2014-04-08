@@ -20,6 +20,7 @@ int	main(int ac, char **av)
     return (1);
   if (!(client = create_connection(av[1], av[2], SOCK_STREAM, &connect)))
     return (1);
+  printf("client connected to %s:%d\n", get_ip_addr(client), port_number(client));
   while ((tmp = read(0, buff, sizeof(buff))) > 0)
     {
       write(client->socket, buff, tmp);
