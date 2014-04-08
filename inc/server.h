@@ -39,6 +39,7 @@ void	quit(t_fclient *client, char *arg);
 void	get(t_fclient *client, char *arg);
 void	put(t_fclient *client, char *arg);
 void	pasv(t_fclient *client, char *arg);
+void	epsv(t_fclient *client, char *arg);
 void	user(t_fclient *client, char *arg);
 void	pass(t_fclient *client, char *arg);
 

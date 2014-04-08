@@ -10,7 +10,7 @@
 
 #include "server.h"
 
-void	pasv(t_fclient *client, UNSEDP char *arg)
+void	epsv(t_fclient *client, UNSEDP char *arg)
 {
   char	*info;
   char	buff[BUFSIZ];
@@ -18,12 +18,31 @@ void	pasv(t_fclient *client, UNSEDP char *arg)
   if (((client->pasv = create_passive_connection(client)) == NULL)
       || (info = calculate_epsvconnection_info(client->pasv)) == NULL)
     {
-      write_sock("Can't create epsv connection.\n", client->net->socket, - 1);
+      write_sock("500 Can't create epsv.\n", client->net->socket, - 1);
       close_connection(client->pasv);
       client->pasv = NULL;
       return ;
     }
   snprintf(buff, sizeof(buff), "229 Entering Extended Passive Mode (%s).\n",
+           info);
+  free(info);
+  write_sock(buff, client->net->socket, - 1);
+}
+
+void	pasv(t_fclient *client, UNSEDP char *arg)
+{
+  char	*info;
+  char	buff[BUFSIZ];
+
+  if (((client->pasv = create_passive_connection(client)) == NULL)
+      || (info = calculate_pasvconnection_info(client->pasv)) == NULL)
+    {
+      write_sock("500 Can't create pasv.\n", client->net->socket, - 1);
+      close_connection(client->pasv);
+      client->pasv = NULL;
+      return ;
+    }
+  snprintf(buff, sizeof(buff), "227 Entering Passive Mode (%s).\n",
            info);
   free(info);
   write_sock(buff, client->net->socket, - 1);
