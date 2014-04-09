@@ -42,19 +42,36 @@ void	print_line(int fd, UNSEDP t_cstate *state)
 void		handle_ui(t_net *client)
 {
   t_cstate	state;
-  t_selfd		**fds;
-  t_selfd		*active;
+  char		*line;
+  int		actu;
+  char	buff[BUFSIZ];
 
   memset(&state, 0, sizeof(t_cstate));
   state.net = client;
-  fds = NULL;
-  fds = (t_selfd**)add_ptr_t_tab(
-          (void**)fds, (void*)create_fd(client->socket, FDREAD, &print_line));
-  fds = (t_selfd**)add_ptr_t_tab(
-          (void**)fds, (void*)create_fd(0, FDREAD, &user_input));
+  if ((line = get_next_line(state.net->socket)) != NULL)
+    {
+      snprintf(buff, sizeof(buff), "%s\n", line);
+      write_sock(buff, 1, -1);
+      free(line);
+    }
   write_sock("ftp> ", 1, -1);
   while (!state.end)
-    if ((active = do_select(fds)) != NULL)
-      (active->callback)(active->fd, &state);
-  free_ptr_tab((void**)fds, &free);
+    {
+      if ((line = get_next_line(0)) != NULL)
+        {
+          do_commands(&state, line);
+          actu = (line[0] != '\0');
+          free(line);
+          line = NULL;
+          if (actu && (line = get_next_line(state.net->socket)) != NULL)
+            {
+              snprintf(buff, sizeof(buff), "%s\n", line);
+              write_sock(buff, 1, -1);
+            }
+          write_sock("ftp> ", 1, -1);
+        }
+      else
+        state.end = 1;
+      free(line);
+    }
 }

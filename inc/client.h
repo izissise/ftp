@@ -14,7 +14,6 @@
 # include <signal.h>
 # include "str.h"
 # include "network.h"
-# include "select.h"
 
 typedef struct	s_cstate
 {

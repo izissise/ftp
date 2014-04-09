@@ -37,6 +37,7 @@ t_net	*parse_epsv(char *ip, char *resp)
   while (port[i] != '|' && port[i])
     i++;
   port[i] = '\0';
+  printf("epsv: ip: %s port: %s\n", ip, port);
   res = create_connection(ip, port, SOCK_STREAM, &connect);
   return (res);
 }
@@ -49,7 +50,7 @@ t_net	*init_epsv_connection(t_cstate *state)
 
   res = NULL;
   write_sock("EPSV\n", state->net->socket, -1);
-  if ((resp = get_next_line(state->net->socket)) != NULL)
+  if ((resp = get_next_line(state->net->socket)) == NULL)
     return (NULL);
   if ((ip = get_ip_addr(state->net)) != NULL)
     {

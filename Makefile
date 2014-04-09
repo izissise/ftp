@@ -16,7 +16,6 @@ SRC			=	inet.c \
 				socket.c \
 				ls.c \
 				cd.c \
-				select.c \
 				commands_handling.c \
 				get_next_line.c
 
