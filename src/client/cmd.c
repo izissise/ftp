@@ -23,9 +23,10 @@ void	list(t_cstate *state, char *arg)
       write_sock(buff, state->net->socket, -1);
       if ((line = get_next_line(state->net->socket)) != NULL)
         {
-          write_sock(line, 1, -1);
+          snprintf(buff, sizeof(buff), "%s\n", line);
+          write_sock(buff, 1, -1);
           free(line);
-          while ((tmp = read(state->net->socket, buff, sizeof(buff))) > 0)
+          while ((tmp = read(pasv->socket, buff, sizeof(buff))) > 0)
             write_sock(buff, 1, tmp);
         }
     }

@@ -26,7 +26,6 @@ t_net	*parse_epsv(char *ip, char *resp)
   while (port[i] != '|' && port[i])
     i++;
   port[i] = '\0';
-  printf("epsv: ip: %s port: %s\n", ip, port);
   res = create_connection(ip, port, SOCK_STREAM, &connect);
   return (res);
 }

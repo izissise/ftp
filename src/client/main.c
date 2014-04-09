@@ -13,13 +13,13 @@
 int	main(int ac, char **av)
 {
   t_net	*client;
+  t_net	*server;
 
   signal(SIGCHLD, SIG_IGN);
   if (ac != 3)
     return (1);
   if (!(client = create_connection(av[1], av[2], SOCK_STREAM, &connect)))
     return (1);
-  printf("client connected to %s:%d\n", get_ip_addr(client), port_number(client));
   handle_ui(client);
   close_connection(client);
   return (0);
