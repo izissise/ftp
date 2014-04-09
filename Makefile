@@ -41,7 +41,7 @@ CC		=	gcc
 RM		=	rm -f
 
 CLIENT		=	client
-SERVER		=	server
+SERVER		=	serveur
 NAME			=	my_ftp
 
 OBJDIR		=	obj/
