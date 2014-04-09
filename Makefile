@@ -19,9 +19,11 @@ SRC			=	inet.c \
 				socket.c \
 				ls.c \
 				cd.c \
+				select.c \
 				get_next_line.c
 
-SRCCLIENT		=	client/main.c
+SRCCLIENT		=	client/main.c \
+				client/handle_input.c
 
 SRCSERVER	=	server/main.c \
 			server/handle_client.c \

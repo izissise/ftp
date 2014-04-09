@@ -12,8 +12,6 @@
 
 int	main(int ac, char **av)
 {
-  char	buff[BUFSIZ];
-  int	tmp;
   t_net	*client;
 
   signal(SIGCHLD, SIG_IGN);
@@ -22,15 +20,7 @@ int	main(int ac, char **av)
   if (!(client = create_connection(av[1], av[2], SOCK_STREAM, &connect)))
     return (1);
   printf("client connected to %s:%d\n", get_ip_addr(client), port_number(client));
-  while ((tmp = read(0, buff, sizeof(buff))) > 0)
-    {
-      write(client->socket, buff, tmp);
-
-      while ((tmp = read(client->socket, buff, sizeof(buff))) > 0)
-        {
-          write(1, buff, tmp);
-        }
-    }
+  handle_ui(client);
   close_connection(client);
   return (0);
 }

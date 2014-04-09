@@ -14,5 +14,15 @@
 # include <signal.h>
 # include "str.h"
 # include "network.h"
+# include "select.h"
+
+typedef struct	s_cstate
+{
+  t_net		*net;
+  char		**pending_cmds;
+  int		end;
+}		t_cstate;
+
+void	handle_ui(t_net *client);
 
 #endif /* !CLIENT_H_INCLUDED */

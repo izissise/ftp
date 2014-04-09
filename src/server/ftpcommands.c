@@ -55,7 +55,7 @@ void	type(t_fclient *client, char *arg)
   if (!strcmp(arg, "I"))
     write_sock("200 Switching to Binary mode.\n", client->net->socket, -1);
   else
-    write_sock("500 Unrecognised TYPE command.\n", client->net->socket, -1);
+    write_sock("500 Unrecognized TYPE command.\n", client->net->socket, -1);
 }
 
 void	get(t_fclient *client, char *arg)
