@@ -26,12 +26,11 @@ char	*calculate_pasvconnection_info(t_net *net)
       || !(len = (strlen(ip) + 12))
       || ((tmp = malloc(len * sizeof(char))) == NULL))
     {
-      printf("port: %d ip: %s\n", port, ip);
       free(tmp);
       free(ip);
       return (NULL);
     }
-  printf("port: %d ip: %s\n", port, ip);
+  ip = strdup("127.0.0.1");
   while (ip[i])
     {
       tmp[i] = (ip[i] == '.') ? ',' : ip[i];

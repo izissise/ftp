@@ -62,11 +62,8 @@ void			print_file(char *file, char *filena, char *buff)
       if ((gr = getgrgid(stats.st_gid)) != NULL)
         group = gr->gr_name;
       get_perm(stats.st_mode, perm);
-      if (perm[0] == 'd')
-        snprintf(buff, BUFSIZ, "%s %s %s \033[34m%s/\033[m\n", perm,
-                 user, group, filena);
-      else
-        snprintf(buff, BUFSIZ, "%s %s %s %s\n", perm, user, group, filena);
+      snprintf(buff, BUFSIZ, "%s 1 %s %s %ld %s\n", perm, user, group,
+               stats.st_blksize, filena);
     }
 }
 
