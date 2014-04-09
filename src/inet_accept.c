@@ -19,6 +19,26 @@ const char	*listening_ip(int domain)
   return (NULL);
 }
 
+t_net	*peer(t_net *net)
+{
+  t_net	*res;
+  int	ret;
+
+  if ((res = malloc(1 * sizeof(t_net))) == NULL)
+    return (NULL);
+  res->socket = -1;
+  res->addrlen = sizeof(struct sockaddr_storage);
+  ret = getpeername(net->socket, (struct sockaddr*)(&(res->addr)),
+                    &(res->addrlen));
+  if (ret)
+    {
+      perror("getpeername");
+      free(res);
+      return (NULL);
+    }
+  return (res);
+}
+
 int		port_number(t_net *net)
 {
   in_port_t		port;

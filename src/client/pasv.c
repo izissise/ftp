@@ -36,16 +36,23 @@ t_net	*init_epsv_connection(t_cstate *state)
   char	*resp;
   char	*ip;
   t_net	*res;
+  t_net	*peers;
 
   res = NULL;
   write_sock("EPSV\n", state->net->socket, -1);
   if ((resp = get_next_line(state->net->socket)) == NULL)
     return (NULL);
-  if ((ip = get_ip_addr(state->net)) != NULL)
+  if ((peers = peer(state->net)) == NULL)
+    {
+      free(resp);
+      return (NULL);
+    }
+  if ((ip = get_ip_addr(peers)) != NULL)
     {
       res = parse_epsv(ip, resp);
       free(ip);
     }
+  close_connection(peers);
   free(resp);
   return (res);
 }

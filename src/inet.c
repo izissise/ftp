@@ -107,7 +107,8 @@ t_net		*create_connection(const char *host, const char *port,
 
 void		close_connection(t_net *net)
 {
-  if (net && close(net->socket) == -1)
-    perror("close");
+  if (net)
+    if (net->socket != -1 && close(net->socket) == -1)
+      perror("close");
   free(net);
 }

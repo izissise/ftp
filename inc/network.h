@@ -38,6 +38,7 @@ t_net		*create_connection(const char *host, const char *port,
 void		close_connection(t_net *net);
 t_net	*accept_connection(int sockfd);
 char		*get_ip_addr(t_net *net);
+t_net	*peer(t_net *net);
 const char	*listening_ip(int domain);
 int		port_number(t_net *net);
 
