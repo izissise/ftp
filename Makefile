@@ -10,20 +10,19 @@
 
 SRC			=	inet.c \
 				inet_accept.c \
-				file.c \
 				path.c \
-				reg_expr.c \
-				str_to_wt.c \
 				ptr_tab.c \
 				clean_tab.c \
 				socket.c \
 				ls.c \
 				cd.c \
 				select.c \
+				commands_handling.c \
 				get_next_line.c
 
 SRCCLIENT		=	client/main.c \
-				client/handle_input.c
+				client/handle_input.c \
+				client/command.c
 
 SRCSERVER	=	server/main.c \
 			server/handle_client.c \

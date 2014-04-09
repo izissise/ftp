@@ -37,34 +37,6 @@ void	unknow_cmd(t_fclient *client, char *arg)
   write_sock(buff, client->net->socket, -1);
 }
 
-void	(*client_commands(char *command))()
-{
-  int	i;
-
-  i = 0;
-  while (i < (int)(sizeof(cmds) / sizeof(t_strfunc)))
-    {
-      if (!(strncasecmp((cmds[i]).str, command, strlen((cmds[i]).str))))
-        return ((cmds[i]).func);
-      i++;
-    }
-  return (&unknow_cmd);
-}
-
-char	*find_arguments(char *line)
-{
-  int	i;
-
-  i = 0;
-  while (line[i] && line[i] != ' ')
-    ++i;
-  if (line[i] == ' ')
-    line[i] = '\0';
-  else
-    --i;
-  return (&(line[i + 1]));
-}
-
 void	handle_clients(t_fclient *client)
 {
   char	*line;
@@ -77,9 +49,9 @@ void	handle_clients(t_fclient *client)
       arg = strdup(find_arguments(line));
       if (strlen(line))
         {
-          f = client_commands(line);
-          if (client->logged || ((f == &user) || (f == &quit)
-                                 || (f == &pass) || (f == &unknow_cmd)))
+          f = client_commands(line, cmds, (sizeof(cmds) / sizeof(t_strfunc)));
+          if (f && (client->logged || ((f == &user) || (f == &quit)
+                                       || (f == &pass) || (f == &unknow_cmd))))
             f(client, arg);
           else
             unknow_cmd(client, arg);

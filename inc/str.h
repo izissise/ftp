@@ -44,13 +44,13 @@ void	rm_empty_str_f_tab(char **tab);
 void	**concat_ptr_tab(void **tab1, void **tab2);
 void	swap_ptr(void **pt1, void **pt2);
 
-char	**expand_reg_exp(char *regexp);
-void	expand_reg_exp_on_tab(char ***tab);
 char	*get_next_line(const int fd);
-char	**str_wt(const char *str, const char *sepa);
 void	write_sock(const char *str, int socket, int strlen);
 
 void	ls_base(char **argv, int out);
 int	cd_base(char **argv, char *basedir, int out);
+
+char	*find_arguments(char *line);
+void	(*client_commands(char *command, t_strfunc *cmds, int size))();
 
 #endif /* !STR_H_INCLUDED */

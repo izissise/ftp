@@ -19,10 +19,12 @@
 typedef struct	s_cstate
 {
   t_net		*net;
+  t_net		*pasv;
   char		**pending_cmds;
   int		end;
 }		t_cstate;
 
 void	handle_ui(t_net *client);
+void	do_commands(t_cstate *state, char *line);
 
 #endif /* !CLIENT_H_INCLUDED */

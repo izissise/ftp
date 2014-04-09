@@ -13,13 +13,9 @@
 void	user_input(int fd, t_cstate *state)
 {
   char	*line;
-  char	buff[BUFSIZ];
 
   if ((line = get_next_line(fd)) != NULL)
-    {
-      snprintf(buff, sizeof(buff), "%s\n", line);
-      write_sock(buff, state->net->socket, -1);
-    }
+    do_commands(state, line);
   else
     state->end = 1;
   free(line);
@@ -58,5 +54,3 @@ void		handle_ui(t_net *client)
       (active->callback)(active->fd, &state);
   free_ptr_tab((void**)fds, &free);
 }
-
-
