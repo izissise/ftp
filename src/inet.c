@@ -44,7 +44,7 @@ int		use_ipsocket(t_net *net, struct addrinfo *tmp,
     ret = f(net->socket, (struct sockaddr*)(&(net->addr)), net->addrlen);
   if (ret == -1)
     close(net->socket);
-  if (f && (net->socket > 0)
+  if (f && (ret != -1)
       && (getsockname(net->socket, (struct sockaddr*)(&(net->addr)),
                       &(net->addrlen))) == -1)
     {
