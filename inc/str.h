@@ -48,9 +48,9 @@ char	*get_next_line(const int fd);
 void	write_sock(const char *str, int socket, int strlen);
 
 void	ls_base(char **argv, int out);
-int	cd_base(char **argv, char *basedir, int out);
+int	cd_base(char **argv);
 
 char	*find_arguments(char *line);
-void	(*client_commands(char *command, t_strfunc *cmds, int size))();
+void	(*commands(char *command, t_strfunc *cmds, int size))();
 
 #endif /* !STR_H_INCLUDED */

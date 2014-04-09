@@ -57,7 +57,7 @@ void	cd(t_fclient *client, char *arg)
     write_sock("500 require one argument\n", client->net->socket, -1);
   else if (!switch_paths(client->basedir, &(tmp[0])))
     write_sock("500 No such file or directory\n", client->net->socket, -1);
-  else if (!(cd_base(tmp, client->basedir, client->net->socket)))
+  else if (!(cd_base(tmp)))
     {
       free(client->currdir);
       client->currdir = get_pwd();

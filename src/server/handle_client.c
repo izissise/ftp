@@ -49,7 +49,7 @@ void	handle_clients(t_fclient *client)
       arg = strdup(find_arguments(line));
       if (strlen(line))
         {
-          f = client_commands(line, cmds, (sizeof(cmds) / sizeof(t_strfunc)));
+          f = commands(line, cmds, (sizeof(cmds) / sizeof(t_strfunc)));
           if (f && (client->logged || ((f == &user) || (f == &quit)
                                        || (f == &pass) || (f == &unknow_cmd))))
             f(client, arg);

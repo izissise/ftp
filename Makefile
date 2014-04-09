@@ -22,7 +22,9 @@ SRC			=	inet.c \
 
 SRCCLIENT		=	client/main.c \
 				client/handle_input.c \
-				client/command.c
+				client/client_commands.c \
+				client/command.c \
+				client/cmd.c
 
 SRCSERVER	=	server/main.c \
 			server/handle_client.c \

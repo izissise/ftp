@@ -15,7 +15,10 @@ void	user_input(int fd, t_cstate *state)
   char	*line;
 
   if ((line = get_next_line(fd)) != NULL)
-    do_commands(state, line);
+    {
+      do_commands(state, line);
+      write_sock("ftp> ", 1, -1);
+    }
   else
     state->end = 1;
   free(line);
@@ -49,6 +52,7 @@ void		handle_ui(t_net *client)
           (void**)fds, (void*)create_fd(client->socket, FDREAD, &print_line));
   fds = (t_selfd**)add_ptr_t_tab(
           (void**)fds, (void*)create_fd(0, FDREAD, &user_input));
+  write_sock("ftp> ", 1, -1);
   while (!state.end)
     if ((active = do_select(fds)) != NULL)
       (active->callback)(active->fd, &state);

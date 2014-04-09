@@ -24,7 +24,7 @@ char	*find_arguments(char *line)
   return (&(line[i + 1]));
 }
 
-void	(*client_commands(char *command, t_strfunc *cmds, int size))()
+void	(*commands(char *command, t_strfunc *cmds, int size))()
 {
   int	i;
 

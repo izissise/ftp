@@ -11,28 +11,30 @@
 #include "client.h"
 
 static t_strfunc	cmds[] = {
-  {"LIST", &list},
+  {"LLS", &lls},
+  {"LCD", &lcd},
+  {"LPWD", &lpwd},
   {"LS", &list},
-  {"CWD", &cd},
+  {"LIST", &list},
   {"CD", &cd},
-  {"PWD", &pwd},
   {"GET", &get},
-  {"PUT", &put},
-  {"USER", &user},
-  {"PASS", &pass}
+  {"PUT", &put}
 };
 
 void	do_commands(t_cstate *state, char *line)
 {
   char	*arg;
+  char	buff[BUFSIZ];
   void	(*f)();
 
   arg = strdup(find_arguments(line));
   if (strlen(line))
     {
-
+      f = commands(line, cmds, (sizeof(cmds) / sizeof(t_strfunc)));
+      if (f)
+        f(state, arg);
+      snprintf(buff, sizeof(buff), "%s %s\n", line, arg);
+      write_sock(buff, state->net->socket, -1);
     }
   free(arg);
-//  snprintf(buff, sizeof(buff), "%s\n", line);
-//  write_sock(buff, state->net->socket, -1);
 }

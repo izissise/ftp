@@ -8,11 +8,19 @@
 ** Last update Mon Oct  8 16:20:21 2012 hugues morisset
 */
 
-#include "str.h"
+#include "client.h"
 
-int	cd_base(char **argv)
+void	list(t_cstate *state, char *arg)
 {
-  if (chdir(argv[0]))
-    return (1);
-  return (0);
+
+}
+
+void	put(t_cstate *state, char *arg)
+{
+
+}
+
+void	get(t_cstate *state, char *arg)
+{
+
 }
