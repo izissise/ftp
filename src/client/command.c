@@ -21,46 +21,6 @@ static t_strfunc	cmds[] = {
   {"PUT", &put}
 };
 
-t_net	*parse_epsv(char *ip, char *resp)
-{
-  t_net	*res;
-  char	*port;
-  int	i;
-
-  i = 0;
-  if (!(port = strstr(resp, "|||")))
-    return (NULL);
-  while (port[i] == '|')
-    i++;
-  port = &(port[i]);
-  i = 0;
-  while (port[i] != '|' && port[i])
-    i++;
-  port[i] = '\0';
-  printf("epsv: ip: %s port: %s\n", ip, port);
-  res = create_connection(ip, port, SOCK_STREAM, &connect);
-  return (res);
-}
-
-t_net	*init_epsv_connection(t_cstate *state)
-{
-  char	*resp;
-  char	*ip;
-  t_net	*res;
-
-  res = NULL;
-  write_sock("EPSV\n", state->net->socket, -1);
-  if ((resp = get_next_line(state->net->socket)) == NULL)
-    return (NULL);
-  if ((ip = get_ip_addr(state->net)) != NULL)
-    {
-      res = parse_epsv(ip, resp);
-      free(ip);
-    }
-  free(resp);
-  return (res);
-}
-
 void	do_commands(t_cstate *state, char *line)
 {
   char	*arg;

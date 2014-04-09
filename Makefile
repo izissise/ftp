@@ -23,6 +23,7 @@ SRCCLIENT		=	client/main.c \
 				client/handle_input.c \
 				client/client_commands.c \
 				client/command.c \
+				client/pasv.c \
 				client/cmd.c
 
 SRCSERVER	=	server/main.c \
