@@ -26,6 +26,7 @@ typedef struct	s_cstate
 
 void	handle_ui(t_net *client);
 void	do_commands(t_cstate *state, char *line);
+t_net	*init_epsv_connection(t_cstate *state);
 
 void	cd(t_cstate *state, char *arg);
 void	lpwd(t_cstate *state, char *arg);

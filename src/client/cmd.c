@@ -12,7 +12,24 @@
 
 void	list(t_cstate *state, char *arg)
 {
+  t_net	*pasv;
+  char	*line;
+  int	tmp;
+  char	buff[BUFSIZ];
 
+  if ((pasv = init_epsv_connection(state)) != NULL)
+    {
+      snprintf(buff, sizeof(buff), "%s %s\n", "LIST", arg);
+      write_sock(buff, state->net->socket, -1);
+      if ((line = get_next_line(state->net->socket)) != NULL)
+        {
+          write_sock(line, 1, -1);
+          free(line);
+          while ((tmp = read(state->net->socket, buff, sizeof(buff))) > 0)
+            write_sock(buff, 1, tmp);
+        }
+    }
+  close_connection(pasv);
 }
 
 void	put(t_cstate *state, char *arg)
@@ -24,3 +41,4 @@ void	get(t_cstate *state, char *arg)
 {
 
 }
+
