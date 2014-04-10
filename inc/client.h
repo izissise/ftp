@@ -32,7 +32,7 @@ void	lpwd(t_cstate *state, char *arg);
 void	lcd(t_cstate *state, char *arg);
 void	lls(t_cstate *state, char *arg);
 void	list(t_cstate *state, char *arg);
-void	put(t_cstate *state, char *arg);
-void	get(t_cstate *state, char *arg);
+void	stor(t_cstate *state, char *arg);
+void	retr(t_cstate *state, char *arg);
 
 #endif /* !CLIENT_H_INCLUDED */

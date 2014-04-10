@@ -58,10 +58,31 @@ void	type(t_fclient *client, char *arg)
     write_sock("500 Unrecognized TYPE command.\n", client->net->socket, -1);
 }
 
-void	get(t_fclient *client, char *arg)
+void	retr(t_fclient *client, char *arg)
 {
+  char	*file;
+
+  file = arg;
+  if (client->pasv == NULL)
+    {
+      write_sock("425 Use EPSV first.\n", client->net->socket, - 1);
+      return ;
+    }
+  accept_passive_connection(client);
+  write_sock("150 Transfering file.\n", client->net->socket, -1);
+  if (strlen(arg) && !switch_paths(client->basedir, &(file)))
+    write_sock("550 Failed to open file.\n", client->pasv->socket, -1);
+  else
+    {
+
+      if (file != arg)
+        free(file);
+    }
+  close_connection(client->pasv);
+  client->pasv = NULL;
+  write_sock("226 Transfer complete.\n", client->net->socket, -1);
 }
 
-void	put(t_fclient *client, char *arg)
+void	stor(t_fclient *client, char *arg)
 {
 }

@@ -59,15 +59,10 @@ void		handle_ui(t_net *client)
     {
       if ((line = get_next_line(0)) != NULL)
         {
-          do_commands(&state, line);
-          actu = (line[0] != '\0');
+          if (line[0] != '\0')
+            do_commands(&state, line);
           free(line);
           line = NULL;
-          if (actu && (line = get_next_line(state.net->socket)) != NULL)
-            {
-              snprintf(buff, sizeof(buff), "%s\n", line);
-              write_sock(buff, 1, -1);
-            }
           write_sock("ftp> ", 1, -1);
         }
       else

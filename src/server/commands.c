@@ -31,9 +31,7 @@ void	list(t_fclient *client, char *arg)
   accept_passive_connection(client);
   write_sock("150 Here comes the directory listing.\n",
              client->net->socket, -1);
-  if (strlen(arg) && !switch_paths(client->basedir, &(tmp[0])))
-    write_sock("500 No such file or directory\n", client->pasv->socket, -1);
-  else
+  if (!(strlen(arg) && !switch_paths(client->basedir, &(tmp[0]))))
     {
       if (arg[0] == '\0')
         tmp[0] = NULL;
@@ -88,3 +86,4 @@ void	quit(t_fclient *client, UNSEDP char *arg)
   client->quit = 1;
   write_sock("221 Goodbye.\n", client->net->socket, -1);
 }
+

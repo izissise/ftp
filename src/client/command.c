@@ -17,8 +17,10 @@ static t_strfunc	cmds[] = {
   {"LS", &list},
   {"LIST", &list},
   {"CD", &cd},
-  {"GET", &get},
-  {"PUT", &put}
+  {"GET", &retr},
+  {"RETR", &retr},
+  {"PUT", &stor},
+  {"STOR", &stor}
 };
 
 void	do_commands(t_cstate *state, char *line)
@@ -32,9 +34,19 @@ void	do_commands(t_cstate *state, char *line)
     {
       f = commands(line, cmds, (sizeof(cmds) / sizeof(t_strfunc)));
       if (f)
-        f(state, arg);
-      snprintf(buff, sizeof(buff), "%s %s\n", line, arg);
-      write_sock(buff, state->net->socket, -1);
+        {
+          f(state, arg);
+          if ((line = get_next_line(state->net->socket)) != NULL)
+            {
+              snprintf(buff, sizeof(buff), "%s\n", line);
+              write_sock(buff, 1, -1);
+            }
+        }
+      else
+        {
+          snprintf(buff, sizeof(buff), "%s %s\n", line, arg);
+          write_sock(buff, state->net->socket, -1);
+        }
     }
   free(arg);
 }

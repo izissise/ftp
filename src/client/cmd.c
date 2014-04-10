@@ -33,12 +33,12 @@ void	list(t_cstate *state, char *arg)
   close_connection(pasv);
 }
 
-void	put(t_cstate *state, char *arg)
+void	stor(t_cstate *state, char *arg)
 {
 
 }
 
-void	get(t_cstate *state, char *arg)
+void	retr(t_cstate *state, char *arg)
 {
 
 }
