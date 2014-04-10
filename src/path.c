@@ -86,7 +86,6 @@ int	switch_paths(char *basepath, char **path, int removefile)
     }
   tmp = path_to_bd_path(basepath, tmppath);
   file = stradd(tmp, file);
-  printf("tmp: %s\nfile: %s\n", tmp, file);
   free(tmp);
   free(tmppath);
   if (!file)
