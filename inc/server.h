@@ -17,6 +17,8 @@
 # include "network.h"
 # include "str.h"
 
+# define SERVERIP "::1"
+
 typedef struct	s_fclient
 {
   t_net		*net;

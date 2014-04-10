@@ -60,7 +60,7 @@ int	main(UNSEDP int ac, UNSEDP char **av)
   char	*ip;
 
   signal(SIGCHLD, SIG_IGN);
-  if (!(server = create_connection(listening_ip(AF_INET), av[1] ? av[1] : "22",
+  if (!(server = create_connection(SERVERIP, av[1] ? av[1] : "22",
                                    SOCK_STREAM, &bind)))
     return (1);
   if (listen(server->socket, MAX_CLIENTS) == -1)
