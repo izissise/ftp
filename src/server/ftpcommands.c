@@ -71,16 +71,16 @@ void	retr(t_fclient *client, char *arg)
   accept_passive_connection(client);
   write_sock("150 Transfering file.\n", client->net->socket, -1);
   if (strlen(arg) && !switch_paths(client->basedir, &(file)))
-    write_sock("550 Failed to open file.\n", client->pasv->socket, -1);
+    write_sock("550 Failed to open file.\n", client->net->socket, -1);
   else
     {
-
+      send_file(client->pasv, file);
       if (file != arg)
         free(file);
+      close_connection(client->pasv);
+      client->pasv = NULL;
+      write_sock("226 Transfer complete.\n", client->net->socket, -1);
     }
-  close_connection(client->pasv);
-  client->pasv = NULL;
-  write_sock("226 Transfer complete.\n", client->net->socket, -1);
 }
 
 void	stor(t_fclient *client, char *arg)

@@ -42,4 +42,7 @@ t_net	*peer(t_net *net);
 const char	*listening_ip(int domain);
 int		port_number(t_net *net);
 
+int	send_file(t_net *net, const char *filename);
+int	recv_file(t_net *net, const char *filename);
+
 #endif /* !NETWORK_H_INCLUDED */
