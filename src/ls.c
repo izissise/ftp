@@ -5,7 +5,7 @@
 ** Login   <moriss_h@epitech.net>
 **
 ** Started on  Mon Oct  8 09:34:29 2012 hugues morisset
-** Last update Mon Oct  8 16:20:21 2012 hugues morisset
+** Last update Thu Apr 10 21:08:18 2014 Hugues
 */
 
 #include <dirent.h>
@@ -55,12 +55,12 @@ char	*ls_time(struct timespec *t)
   return (&(res[4]));
 }
 
-void			print_file(char *file, char *filena, char *buff)
+void		print_file(char *file, char *filena, char *buff)
 {
-  char			prm[11];
-  struct stat		stat;
-  char			*user;
-  char			*group;
+  char		prm[11];
+  struct stat	stat;
+  char	       	*user;
+  char 		*group;
   struct passwd	*pass;
   struct group	*gr;
 

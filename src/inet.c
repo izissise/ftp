@@ -5,17 +5,17 @@
 ** Login   <moriss_h@epitech.net>
 **
 ** Started on  Mon Oct  8 09:34:29 2012 hugues morisset
-** Last update Mon Oct  8 16:20:21 2012 hugues morisset
+** Last update Thu Apr 10 21:07:46 2014 Hugues
 */
 
 #include "network.h"
 
-char		*get_ip_addr(t_net *net)
+char			*get_ip_addr(t_net *net)
 {
   struct sockaddr	*sa;
-  void		*res;
-  char		*ret;
-  char		buff[4096];
+  void			*res;
+  char			*ret;
+  char			buff[4096];
 
   if (!net)
     return (NULL);
@@ -30,8 +30,8 @@ char		*get_ip_addr(t_net *net)
 }
 
 int		use_ipsocket(t_net *net, struct addrinfo *tmp,
-                   int	(*f)(int sockfd, const struct sockaddr *addr,
-                            socklen_t addrlen))
+			     int (*f)(int sockfd, const struct sockaddr *addr,
+				      socklen_t addrlen))
 {
   int		ret;
 

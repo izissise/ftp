@@ -5,7 +5,7 @@
 ** Login   <moriss_h@epitech.net>
 **
 ** Started on  Mon Oct  8 09:34:29 2012 hugues morisset
-** Last update Mon Oct  8 16:20:21 2012 hugues morisset
+** Last update Thu Apr 10 21:10:26 2014 Hugues
 */
 
 #include <stdio.h>
@@ -51,9 +51,9 @@ char	*calculate_epsvconnection_info(t_net *net)
   return (strdup(buff));
 }
 
-t_net		*create_passive_connection(t_fclient *client)
+t_net			*create_passive_connection(t_fclient *client)
 {
-  t_net		*res;
+  t_net			*res;
   struct sockaddr	*addr;
 
   addr = (struct sockaddr*)(&(client->net->addr));
@@ -69,7 +69,7 @@ t_net		*create_passive_connection(t_fclient *client)
   return (res);
 }
 
-void		accept_passive_connection(t_fclient *client)
+void	accept_passive_connection(t_fclient *client)
 {
   t_net	*tmp;
 

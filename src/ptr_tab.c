@@ -5,7 +5,7 @@
 ** Login   <moriss_hepitech.net>
 **
 ** Started on  Tue Mar 19 11:04:35 2013 hugues morisset
-** Last update Fri May 24 17:58:57 2013 hugues morisset
+** Last update Thu Apr 10 21:08:50 2014 Hugues
 */
 
 #include "str.h"
@@ -94,7 +94,7 @@ void	rm_ptr_f_tab(void **tab, void *ptr)
     }
 }
 
-void	free_ptr_tab(void **tab, void	(*f)(void *ptr))
+void	free_ptr_tab(void **tab, void (*f)(void *ptr))
 {
   int	i;
 

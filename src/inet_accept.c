@@ -5,7 +5,7 @@
 ** Login   <moriss_h@epitech.net>
 **
 ** Started on  Mon Oct  8 09:34:29 2012 hugues morisset
-** Last update Mon Oct  8 16:20:21 2012 hugues morisset
+** Last update Thu Apr 10 21:06:48 2014 Hugues
 */
 
 #include "network.h"
@@ -39,7 +39,7 @@ t_net	*peer(t_net *net)
   return (res);
 }
 
-int		port_number(t_net *net)
+int			port_number(t_net *net)
 {
   in_port_t		port;
   struct sockaddr	*addr;
