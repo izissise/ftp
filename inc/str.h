@@ -43,6 +43,7 @@ void	free_ptr_tab(void **tab, void	(*f)(void *ptr));
 void	rm_empty_str_f_tab(char **tab);
 void	**concat_ptr_tab(void **tab1, void **tab2);
 void	swap_ptr(void **pt1, void **pt2);
+char	*stradd(char *s1, char *s2);
 
 char	*get_next_line(const int fd);
 void	write_sock(const char *str, int socket, int strlen);

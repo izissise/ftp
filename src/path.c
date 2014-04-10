@@ -69,25 +69,28 @@ int	switch_paths(char *basepath, char **path, int removefile)
 {
   char	*tmp;
   int	i;
+  char	*file;
   char	*tmppath;
 
+  file = NULL;
   tmppath = strdup(*path);
-  if (removefile && tmppath)
+  if (removefile && tmppath && (i = strlen(tmppath)) > 0)
     {
-      i = strlen(tmppath);
-      while (--i > 0)
+      while (--i >= 0)
         if (tmppath[i] == '/')
           {
             tmppath[i] = '\0';
             break ;
           }
-      if ((i == 0) && tmppath[0])
-        tmppath[0] = '/';
+      file = &(tmppath[i + (tmppath[0] != '\0')]);
     }
   tmp = path_to_bd_path(basepath, tmppath);
+  file = stradd(tmp, file);
+  printf("tmp: %s\nfile: %s\n", tmp, file);
+  free(tmp);
   free(tmppath);
-  if (!tmp)
+  if (!file)
     return (0);
-  swap_ptr((void**)(path), (void**)&tmp);
+  swap_ptr((void**)(path), (void**)&file);
   return (1);
 }
