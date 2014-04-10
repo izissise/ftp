@@ -8,8 +8,9 @@
 ** Last update Mon Oct  8 16:20:21 2012 hugues morisset
 */
 
-#include "server.h"
 #include <stdio.h>
+
+#include "server.h"
 
 char	*calculate_pasvconnection_info(t_net *net)
 {
@@ -21,8 +22,8 @@ char	*calculate_pasvconnection_info(t_net *net)
 
   i = 0;
   tmp = NULL;
-  ip = NULL;
-  if (!(port = port_number(net)) || !(ip = get_ip_addr(net))
+  ip = "127.0.0.1";
+  if (!(port = port_number(net))
       || !(len = (strlen(ip) + 12))
       || ((tmp = malloc(len * sizeof(char))) == NULL))
     {
@@ -30,14 +31,12 @@ char	*calculate_pasvconnection_info(t_net *net)
       free(ip);
       return (NULL);
     }
-  ip = strdup("127.0.0.1");
   while (ip[i])
     {
       tmp[i] = (ip[i] == '.') ? ',' : ip[i];
       i++;
     }
   snprintf(&(tmp[i]), len - i, ",%d,%d", port / 256, port % 256);
-  free(ip);
   return (tmp);
 }
 

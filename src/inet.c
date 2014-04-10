@@ -75,7 +75,7 @@ int			ipaddress_init(const char *ip, const char *port,
     {
       net->socket = socket(tmp->ai_family, tmp->ai_socktype, tmp->ai_protocol);
       if (!((net->socket == -1) || ((ret = use_ipsocket(net, tmp, f)) == -1)))
-        break;
+        break ;
       tmp = tmp->ai_next;
     }
   freeaddrinfo(res);

@@ -43,7 +43,7 @@ void	handle_clients(t_fclient *client)
   char	*arg;
   void	(*f)();
 
-  write_sock("220 Welcome ! Type HELP for help.\n", client->net->socket, -1);
+  write_sock("220 FtpServer.\n", client->net->socket, -1);
   while (!(client->quit) && (line = get_next_line(client->net->socket)))
     {
       arg = strdup(find_arguments(line));
