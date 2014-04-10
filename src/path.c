@@ -65,11 +65,27 @@ char	*path_to_bd_path(char *basepath, char *path)
   return (abspath);
 }
 
-int	switch_paths(char *basepath, char **path)
+int	switch_paths(char *basepath, char **path, int removefile)
 {
   char	*tmp;
+  int	i;
+  char	*tmppath;
 
-  tmp = path_to_bd_path(basepath, *path);
+  tmppath = strdup(*path);
+  if (removefile && tmppath)
+    {
+      i = strlen(tmppath);
+      while (--i > 0)
+        if (tmppath[i] == '/')
+          {
+            tmppath[i] = '\0';
+            break ;
+          }
+      if ((i == 0) && tmppath[0])
+        tmppath[0] = '/';
+    }
+  tmp = path_to_bd_path(basepath, tmppath);
+  free(tmppath);
   if (!tmp)
     return (0);
   swap_ptr((void**)(path), (void**)&tmp);

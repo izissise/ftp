@@ -69,11 +69,11 @@ void	retr(t_fclient *client, char *arg)
       return ;
     }
   accept_passive_connection(client);
-  write_sock("150 Transfering file.\n", client->net->socket, -1);
-  if (strlen(arg) && !switch_paths(client->basedir, &(file)))
+  if (strlen(arg) && !switch_paths(client->basedir, &(file), 0))
     write_sock("550 Failed to open file.\n", client->net->socket, -1);
   else
     {
+      write_sock("150 Transfering file.\n", client->net->socket, -1);
       send_file(client->pasv, file);
       if (file != arg)
         free(file);
@@ -85,4 +85,25 @@ void	retr(t_fclient *client, char *arg)
 
 void	stor(t_fclient *client, char *arg)
 {
+  char	*file;
+
+  file = arg;
+  if (client->pasv == NULL)
+    {
+      write_sock("425 Use EPSV first.\n", client->net->socket, - 1);
+      return ;
+    }
+  accept_passive_connection(client);
+  if (strlen(arg) && !switch_paths(client->basedir, &(file), 1))
+    write_sock("550 Permission denied.\n", client->net->socket, -1);
+  else
+    {
+      write_sock("150 Transfering file.\n", client->net->socket, -1);
+      recv_file(client->pasv, file);
+      if (file != arg)
+        free(file);
+      close_connection(client->pasv);
+      client->pasv = NULL;
+      write_sock("226 Transfer complete.\n", client->net->socket, -1);
+    }
 }

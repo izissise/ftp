@@ -34,7 +34,7 @@ char	*get_pwd();
 char	*abs_path(char *currpath);
 int	is_path_out(char *basepath, char *path);
 char	*path_to_bd_path(char *basepath, char *path);
-int	switch_paths(char *basepath, char **path);
+int	switch_paths(char *basepath, char **path, int removefile);
 
 int	ptr_tab_size(void **tab);
 void	**add_ptr_t_tab(void **tab, void *add);

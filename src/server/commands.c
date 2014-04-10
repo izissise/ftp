@@ -31,7 +31,7 @@ void	list(t_fclient *client, char *arg)
   accept_passive_connection(client);
   write_sock("150 Here comes the directory listing.\n",
              client->net->socket, -1);
-  if (!(strlen(arg) && !switch_paths(client->basedir, &(tmp[0]))))
+  if (!(strlen(arg) && !switch_paths(client->basedir, &(tmp[0]), 0)))
     {
       if (arg[0] == '\0')
         tmp[0] = NULL;
@@ -53,7 +53,7 @@ void	cd(t_fclient *client, char *arg)
   tmp[1] = NULL;
   if (arg[0] == '\0')
     write_sock("500 require one argument\n", client->net->socket, -1);
-  else if (!switch_paths(client->basedir, &(tmp[0])))
+  else if (!switch_paths(client->basedir, &(tmp[0]), 0))
     write_sock("500 No such file or directory\n", client->net->socket, -1);
   else if (!(cd_base(tmp)))
     {
