@@ -12,6 +12,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <pwd.h>
+#include <time.h>
 #include <grp.h>
 
 #include "str.h"
@@ -42,28 +43,40 @@ char		*get_perm(mode_t perm, char *res)
   return (res);
 }
 
+char	*ls_time(struct timespec *t)
+{
+  char	*res;
+
+  res = ctime((time_t*)t);
+  if (res == NULL)
+    res = "???";
+  else if (strlen(res) > 16)
+    res[16] = '\0';
+  return (&(res[4]));
+}
+
 void			print_file(char *file, char *filena, char *buff)
 {
-  char			perm[11];
-  struct stat		stats;
+  char			prm[11];
+  struct stat		stat;
   char			*user;
   char			*group;
   struct passwd	*pass;
   struct group	*gr;
 
-  if (lstat(file, &stats) == -1)
+  if (lstat(file, &stat) == -1)
     snprintf(buff, BUFSIZ, "%s %s\n", filena, strerror(errno));
   else
     {
       user = "???";
       group = "???";
-      if ((pass = getpwuid(stats.st_uid)) != NULL)
+      if ((pass = getpwuid(stat.st_uid)) != NULL)
         user = pass->pw_name;
-      if ((gr = getgrgid(stats.st_gid)) != NULL)
+      if ((gr = getgrgid(stat.st_gid)) != NULL)
         group = gr->gr_name;
-      get_perm(stats.st_mode, perm);
-      snprintf(buff, BUFSIZ, "%s 1 %s %s %ld %s\n", perm, user, group,
-               stats.st_blksize, filena);
+      get_perm(stat.st_mode, prm);
+      snprintf(buff, BUFSIZ, "%s %4ld %s %s %10ld %s %s\n", prm, stat.st_nlink,
+               user, group, stat.st_size, ls_time(&stat.st_mtim), filena);
     }
 }
 
