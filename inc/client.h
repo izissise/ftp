@@ -29,6 +29,7 @@ void	handle_ui(t_net *client);
 void	do_commands(t_cstate *state, char *line);
 int	responseokay(char *resp);
 int	wait_response(void (*f)());
+int	serv_response(t_cstate *state);
 t_net	*init_epsv_connection(t_cstate *state);
 
 void	cd(t_cstate *state, char *arg);

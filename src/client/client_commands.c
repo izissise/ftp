@@ -16,6 +16,7 @@ void	cd(t_cstate *state, char *arg)
 
   snprintf(buff, sizeof(buff), "%s %s\n", "CWD", arg);
   write_sock(buff, state->net->socket, -1);
+  serv_response(state);
 }
 
 void	lls(UNSEDP t_cstate *state, char *arg)

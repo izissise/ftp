@@ -13,19 +13,15 @@
 void	list(t_cstate *state, char *arg)
 {
   t_net	*pasv;
-  char	*line;
   char	buff[BUFSIZ];
 
   if ((pasv = init_epsv_connection(state)) != NULL)
     {
       snprintf(buff, sizeof(buff), "%s %s\n", "LIST", arg);
       write_sock(buff, state->net->socket, -1);
-      if ((line = get_next_line(state->net->socket)) != NULL)
-        {
-          send_line(line, 1);
-          free(line);
-          cat(pasv->socket, 1);
-        }
+      serv_response(state);
+      cat(pasv->socket, 1);
+      serv_response(state);
     }
   close_connection(pasv);
 }
@@ -33,42 +29,36 @@ void	list(t_cstate *state, char *arg)
 void	stor(t_cstate *state, char *arg)
 {
   t_net	*pasv;
-  char	*line;
   char	buff[BUFSIZ];
 
-  if ((pasv = init_epsv_connection(state)) != NULL)
+  if (switch_paths("./", &arg, 0))
     {
-      snprintf(buff, sizeof(buff), "%s %s\n", "STOR", arg);
-      write_sock(buff, state->net->socket, -1);
-      if (switch_paths("./", &arg, 0)
-          && (line = get_next_line(state->net->socket)) != NULL)
+      if ((pasv = init_epsv_connection(state)) != NULL)
         {
-          send_line(line, 1);
-          if (line[0] != '5')
+          snprintf(buff, sizeof(buff), "%s %s\n", "STOR", arg);
+          write_sock(buff, state->net->socket, -1);
+          if (serv_response(state) == 0)
             send_file(pasv, arg);
-          free(line);
           free(arg);
+          serv_response(state);
         }
+      close_connection(pasv);
     }
-  close_connection(pasv);
 }
 
 void	retr(t_cstate *state, char *arg)
 {
   t_net	*pasv;
-  char	*line;
   char	buff[BUFSIZ];
 
   if ((pasv = init_epsv_connection(state)) != NULL)
     {
       snprintf(buff, sizeof(buff), "%s %s\n", "RETR", arg);
       write_sock(buff, state->net->socket, -1);
-      if ((line = get_next_line(state->net->socket)) != NULL)
+      if (serv_response(state) == 0)
         {
-          send_line(line, 1);
-          if (line[0] != '5')
-            recv_file(pasv, arg);
-          free(line);
+          recv_file(pasv, arg);
+          serv_response(state);
         }
     }
   close_connection(pasv);
