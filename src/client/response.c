@@ -10,15 +10,18 @@
 
 #include "client.h"
 
-int	main(int ac, char **av)
+int	responseokay(char *resp)
 {
-  t_net	*client;
+  if (resp && resp[0] == '2')
+    {
+      return (1);
+    }
+  return (0);
+}
 
-  if (ac != 3)
+int	wait_response(void (*f)())
+{
+  if (f != &lls && f != &lcd && f != &lpwd)
     return (1);
-  if (!(client = create_connection(av[1], av[2], SOCK_STREAM, &connect)))
-    return (1);
-  handle_ui(client);
-  close_connection(client);
   return (0);
 }

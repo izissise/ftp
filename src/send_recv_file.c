@@ -17,10 +17,10 @@
 void	cat(int in, int out)
 {
   int	tmp;
-  char	buff[BUFSIZ];
+  char	buff[64 * 1024];
 
   while ((tmp = read(in, buff, BUFSIZ)) > 0)
-    write(out, buff, tmp);
+    write_sock(buff, out, tmp);
 }
 
 int	send_file(t_net *net, const char *filename)

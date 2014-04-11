@@ -17,7 +17,7 @@
 # include "network.h"
 # include "str.h"
 
-# define SERVERIP "::1"
+# define SERVERIP "10.10.253.121"
 
 typedef struct	s_fclient
 {
@@ -28,6 +28,7 @@ typedef struct	s_fclient
   char		*user;
   int		logged;
   int		quit;
+  int		bin;
 }		t_fclient;
 
 void	handle_clients(t_fclient *client);

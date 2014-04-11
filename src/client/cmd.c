@@ -14,7 +14,6 @@ void	list(t_cstate *state, char *arg)
 {
   t_net	*pasv;
   char	*line;
-  int	tmp;
   char	buff[BUFSIZ];
 
   if ((pasv = init_epsv_connection(state)) != NULL)
@@ -26,8 +25,7 @@ void	list(t_cstate *state, char *arg)
           snprintf(buff, sizeof(buff), "%s\n", line);
           write_sock(buff, 1, -1);
           free(line);
-          while ((tmp = read(pasv->socket, buff, sizeof(buff))) > 0)
-            write_sock(buff, 1, tmp);
+          cat(pasv->socket, 1);
         }
     }
   close_connection(pasv);
@@ -35,11 +33,43 @@ void	list(t_cstate *state, char *arg)
 
 void	stor(t_cstate *state, char *arg)
 {
+  t_net	*pasv;
+  char	*line;
+  char	buff[BUFSIZ];
 
+  if ((pasv = init_epsv_connection(state)) != NULL)
+    {
+      snprintf(buff, sizeof(buff), "%s %s\n", "STOR", arg);
+      write_sock(buff, state->net->socket, -1);
+      if ((line = get_next_line(state->net->socket)) != NULL)
+        {
+          snprintf(buff, sizeof(buff), "%s\n", line);
+          write_sock(buff, 1, -1);
+          free(line);
+          recv_file(pasv, arg);
+        }
+    }
+  close_connection(pasv);
 }
 
 void	retr(t_cstate *state, char *arg)
 {
+  t_net	*pasv;
+  char	*line;
+  char	buff[BUFSIZ];
 
+  if ((pasv = init_epsv_connection(state)) != NULL)
+    {
+      snprintf(buff, sizeof(buff), "%s %s\n", "RETR", arg);
+      write_sock(buff, state->net->socket, -1);
+      if ((line = get_next_line(state->net->socket)) != NULL)
+        {
+          snprintf(buff, sizeof(buff), "%s\n", line);
+          write_sock(buff, 1, -1);
+          free(line);
+          send_file(pasv, arg);
+        }
+    }
+  close_connection(pasv);
 }
 

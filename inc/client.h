@@ -11,7 +11,6 @@
 #ifndef CLIENT_H_INCLUDED
 # define CLIENT_H_INCLUDED
 
-# include <signal.h>
 # include "str.h"
 # include "network.h"
 
@@ -20,11 +19,14 @@ typedef struct	s_cstate
   t_net		*net;
   t_net		*pasv;
   char		**pending_cmds;
+  int		logged;
   int		end;
 }		t_cstate;
 
 void	handle_ui(t_net *client);
 void	do_commands(t_cstate *state, char *line);
+int	responseokay(char *resp);
+int	wait_response(void (*f)());
 t_net	*init_epsv_connection(t_cstate *state);
 
 void	cd(t_cstate *state, char *arg);

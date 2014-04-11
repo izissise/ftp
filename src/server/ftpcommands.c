@@ -52,8 +52,11 @@ void	pasv(t_fclient *client, UNSEDP char *arg)
 
 void	type(t_fclient *client, char *arg)
 {
-  if (!strcmp(arg, "I"))
-    write_sock("200 Switching to Binary mode.\n", client->net->socket, -1);
+  if (!strcmp(arg, "I") || !strcmp(arg, "A"))
+    {
+      client->bin = (!strcmp(arg, "I")) ? 1 : 0;
+      write_sock("200 Switching to mode.\n", client->net->socket, -1);
+    }
   else
     write_sock("500 Unrecognized TYPE command.\n", client->net->socket, -1);
 }

@@ -36,7 +36,8 @@ void	do_commands(t_cstate *state, char *line)
       if (f)
         {
           f(state, arg);
-          if ((line = get_next_line(state->net->socket)) != NULL)
+          if (wait_response(f)
+              && (line = get_next_line(state->net->socket)) != NULL)
             {
               snprintf(buff, sizeof(buff), "%s\n", line);
               write_sock(buff, 1, -1);
