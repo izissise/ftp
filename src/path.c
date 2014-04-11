@@ -55,7 +55,6 @@ char	*path_to_bd_path(char *basepath, char *path)
     return (NULL);
   snprintf(tmppath, len, "%s%s%s", ((path[0] == '/') ? basepath : "./"),
            path, "/");
-  printf("path: %d %s\n", len, tmppath);
   abspath = abs_path(tmppath);
   free(tmppath);
   if ((abspath == NULL) || (basepath == NULL))
