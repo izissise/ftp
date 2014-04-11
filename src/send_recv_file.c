@@ -11,8 +11,49 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <string.h>
 
 #include "network.h"
+
+void	send_line(char *line, int fd)
+{
+  char	*rline;
+  int	len;
+
+  len = line ? strlen(line) : 0;
+  if (!line || (rline = malloc((len + 3) * sizeof(char))) == NULL)
+    return ;
+  strcpy(rline, line);
+  strcpy(&(rline[len]), "\n");
+  write_sock(rline, fd, len + 1);
+  free(rline);
+}
+
+void	write_sock(const char *str, int socket, int strlen)
+{
+  int	len;
+
+  len = 0;
+  if (str != NULL)
+    {
+      if (strlen == -1)
+        {
+          while (str[len] != '\0')
+            len++;
+          strlen = len;
+        }
+      while ((len = write(socket, str, strlen)) != strlen)
+        {
+          if (len == -1)
+            {
+              perror("write");
+              return ;
+            }
+          str = &(str[len]);
+          strlen -= len;
+        }
+    }
+}
 
 void	cat(int in, int out)
 {

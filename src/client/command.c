@@ -23,31 +23,32 @@ static t_strfunc	cmds[] = {
   {"STOR", &stor}
 };
 
+static void	send_unk_cmd(t_cstate *state, char *line, char *arg)
+{
+  char	buff[BUFSIZ];
+
+  snprintf(buff, sizeof(buff), "%s %s\n", line, arg);
+  write_sock(buff, state->net->socket, -1);
+}
+
 void	do_commands(t_cstate *state, char *line)
 {
   char	*arg;
-  char	buff[BUFSIZ];
   void	(*f)();
 
   arg = strdup(find_arguments(line));
-  if (strlen(line))
+  if ((strlen(line))
+      && (f = commands(line, cmds, (sizeof(cmds) / sizeof(t_strfunc)))))
     {
-      f = commands(line, cmds, (sizeof(cmds) / sizeof(t_strfunc)));
-      if (f)
+      f(state, arg);
+      if (wait_response(f)
+          && (line = get_next_line(state->net->socket)) != NULL)
         {
-          f(state, arg);
-          if (wait_response(f)
-              && (line = get_next_line(state->net->socket)) != NULL)
-            {
-              snprintf(buff, sizeof(buff), "%s\n", line);
-              write_sock(buff, 1, -1);
-            }
-        }
-      else
-        {
-          snprintf(buff, sizeof(buff), "%s %s\n", line, arg);
-          write_sock(buff, state->net->socket, -1);
+          send_line(line, 1);
+          free(line);
         }
     }
+  else if (strlen(line))
+    send_unk_cmd(state, line, arg);
   free(arg);
 }

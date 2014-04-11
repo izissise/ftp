@@ -45,6 +45,7 @@ int		port_number(t_net *net);
 int	send_file(t_net *net, const char *filename);
 int	recv_file(t_net *net, const char *filename);
 void	cat(int in, int out);
+void	send_line(char *line, int fd);
 void	write_sock(const char *str, int socket, int strlen);
 
 #endif /* !NETWORK_H_INCLUDED */

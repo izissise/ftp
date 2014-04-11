@@ -22,8 +22,7 @@ void	list(t_cstate *state, char *arg)
       write_sock(buff, state->net->socket, -1);
       if ((line = get_next_line(state->net->socket)) != NULL)
         {
-          snprintf(buff, sizeof(buff), "%s\n", line);
-          write_sock(buff, 1, -1);
+          send_line(line, 1);
           free(line);
           cat(pasv->socket, 1);
         }
@@ -43,8 +42,7 @@ void	stor(t_cstate *state, char *arg)
       write_sock(buff, state->net->socket, -1);
       if ((line = get_next_line(state->net->socket)) != NULL)
         {
-          snprintf(buff, sizeof(buff), "%s\n", line);
-          write_sock(buff, 1, -1);
+          send_line(line, 1);
           free(line);
           recv_file(pasv, arg);
         }
@@ -64,8 +62,7 @@ void	retr(t_cstate *state, char *arg)
       write_sock(buff, state->net->socket, -1);
       if ((line = get_next_line(state->net->socket)) != NULL)
         {
-          snprintf(buff, sizeof(buff), "%s\n", line);
-          write_sock(buff, 1, -1);
+          send_line(line, 1);
           free(line);
           send_file(pasv, arg);
         }

@@ -30,8 +30,8 @@ char			*get_ip_addr(t_net *net)
 }
 
 int		use_ipsocket(t_net *net, struct addrinfo *tmp,
-			     int (*f)(int sockfd, const struct sockaddr *addr,
-				      socklen_t addrlen))
+                   int (*f)(int sockfd, const struct sockaddr *addr,
+                            socklen_t addrlen))
 {
   int		ret;
 

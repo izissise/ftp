@@ -13,7 +13,6 @@ SRC			=	inet.c \
 				path.c \
 				ptr_tab.c \
 				clean_tab.c \
-				socket.c \
 				ls.c \
 				cd.c \
 				send_recv_file.c \

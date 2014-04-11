@@ -14,14 +14,12 @@ void		handle_ui(t_net *client)
 {
   t_cstate	state;
   char		*line;
-  char	buff[BUFSIZ];
 
   memset(&state, 0, sizeof(t_cstate));
   state.net = client;
   if ((line = get_next_line(state.net->socket)) != NULL)
     {
-      snprintf(buff, sizeof(buff), "%s\n", line);
-      write_sock(buff, 1, -1);
+      send_line(line, 1);
       free(line);
     }
   write_sock("ftp> ", 1, -1);
