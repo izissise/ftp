@@ -22,7 +22,7 @@ void		handle_ui(t_net *client)
       send_line(line, 1);
       free(line);
     }
-  write_sock("ftp> ", 1, -1);
+  write_sock(PROMPT, 1, -1);
   while (!state.end)
     {
       if ((line = get_next_line(0)) != NULL)
@@ -31,7 +31,7 @@ void		handle_ui(t_net *client)
             do_commands(&state, line);
           free(line);
           line = NULL;
-          write_sock("ftp> ", 1, -1);
+          write_sock(PROMPT, 1, -1);
         }
       else
         state.end = 1;

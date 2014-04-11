@@ -40,11 +40,14 @@ void	stor(t_cstate *state, char *arg)
     {
       snprintf(buff, sizeof(buff), "%s %s\n", "STOR", arg);
       write_sock(buff, state->net->socket, -1);
-      if ((line = get_next_line(state->net->socket)) != NULL)
+      if (switch_paths("./", &arg, 0)
+          && (line = get_next_line(state->net->socket)) != NULL)
         {
           send_line(line, 1);
+          if (line[0] != '5')
+            send_file(pasv, arg);
           free(line);
-          recv_file(pasv, arg);
+          free(arg);
         }
     }
   close_connection(pasv);
@@ -63,8 +66,9 @@ void	retr(t_cstate *state, char *arg)
       if ((line = get_next_line(state->net->socket)) != NULL)
         {
           send_line(line, 1);
+          if (line[0] != '5')
+            recv_file(pasv, arg);
           free(line);
-          send_file(pasv, arg);
         }
     }
   close_connection(pasv);

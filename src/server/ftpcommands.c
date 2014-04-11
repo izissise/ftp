@@ -76,7 +76,7 @@ void	retr(t_fclient *client, char *arg)
     write_sock("550 Failed to open file.\n", client->net->socket, -1);
   else
     {
-      write_sock("150 Transfering file.\n", client->net->socket, -1);
+      write_sock("150 Transferring file.\n", client->net->socket, -1);
       send_file(client->pasv, file);
       if (file != arg)
         free(file);

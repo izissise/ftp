@@ -49,6 +49,13 @@ void	do_commands(t_cstate *state, char *line)
         }
     }
   else if (strlen(line))
-    send_unk_cmd(state, line, arg);
+    {
+      send_unk_cmd(state, line, arg);
+      if ((line = get_next_line(state->net->socket)) != NULL)
+        {
+          send_line(line, 1);
+          free(line);
+        }
+    }
   free(arg);
 }
