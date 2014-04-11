@@ -63,6 +63,8 @@ void	cd(t_fclient *client, char *arg)
       write_sock("250 Directory successfully changed.\n",
                  client->net->socket, -1);
     }
+  else
+    write_sock("500 Permission denied\n", client->net->socket, -1);
 }
 
 void	pwd(t_fclient *client, UNSEDP char *arg)

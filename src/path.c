@@ -48,11 +48,14 @@ char	*path_to_bd_path(char *basepath, char *path)
 {
   char	*abspath;
   char	*tmppath;
+  int	len;
 
-  if (!path || (tmppath = malloc(strlen(path) + 3)) == NULL)
+  len = (path ? strlen(path) : 0) + (basepath ? strlen(basepath) : 0)  + 3;
+  if (!path || !basepath || (tmppath = malloc(len)) == NULL)
     return (NULL);
-  snprintf(tmppath, strlen(path) + 3, "%s%s%s", path[0] == '/' ? "" : "./",
-           &(path[path[0] == '/']), "/");
+  snprintf(tmppath, len, "%s%s%s", ((path[0] == '/') ? basepath : "./"),
+           path, "/");
+  printf("path: %d %s\n", len, tmppath);
   abspath = abs_path(tmppath);
   free(tmppath);
   if ((abspath == NULL) || (basepath == NULL))
@@ -84,7 +87,7 @@ int	switch_paths(char *basepath, char **path, int removefile)
           }
       file = &(tmppath[i + (tmppath[0] != '\0')]);
     }
-  tmp = path_to_bd_path(basepath, tmppath);
+  if ((tmp = path_to_bd_path(basepath, tmppath)) != NULL)
   file = stradd(tmp, file);
   free(tmp);
   free(tmppath);
