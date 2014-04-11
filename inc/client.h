@@ -14,6 +14,8 @@
 # include "str.h"
 # include "network.h"
 
+# define PROMPT "ftp> "
+
 typedef struct	s_cstate
 {
   t_net		*net;
