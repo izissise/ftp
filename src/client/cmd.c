@@ -64,3 +64,8 @@ void	retr(t_cstate *state, char *arg)
   close_connection(pasv);
 }
 
+void	quit(t_cstate *state, UNSEDP char *arg)
+{
+  state->end = 1;
+}
+

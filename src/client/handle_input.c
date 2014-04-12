@@ -22,16 +22,15 @@ void		handle_ui(t_net *client)
       send_line(line, 1);
       free(line);
     }
-  write_sock(PROMPT, 1, -1);
   while (!state.end)
     {
+      write_sock(PROMPT, 1, -1);
       if ((line = get_next_line(0)) != NULL)
         {
           if (line[0] != '\0')
             do_commands(&state, line);
           free(line);
           line = NULL;
-          write_sock(PROMPT, 1, -1);
         }
       else
         state.end = 1;

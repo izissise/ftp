@@ -20,7 +20,8 @@ static t_strfunc	cmds[] = {
   {"GET", &retr},
   {"RETR", &retr},
   {"PUT", &stor},
-  {"STOR", &stor}
+  {"STOR", &stor},
+  {"QUIT", &quit}
 };
 
 static void	send_unk_cmd(t_cstate *state, char *line, char *arg)
