@@ -30,12 +30,19 @@ void	stor(t_cstate *state, char *arg)
 {
   t_net	*pasv;
   char	buff[BUFSIZ];
+  char	*file;
+  int	i;
 
   if (switch_paths("./", &arg, 0))
     {
       if ((pasv = init_epsv_connection(state)) != NULL)
         {
-          snprintf(buff, sizeof(buff), "%s %s\n", "STOR", arg);
+          i = strlen(arg) - 1;
+          while (arg[i] != '/' && i >= 0)
+            --i;
+          ++i;
+          file = &(arg[i]);
+          snprintf(buff, sizeof(buff), "%s %s\n", "STOR", file);
           write_sock(buff, state->net->socket, -1);
           if (serv_response(state) == 0)
             send_file(pasv, arg);
@@ -49,6 +56,8 @@ void	stor(t_cstate *state, char *arg)
 void	retr(t_cstate *state, char *arg)
 {
   t_net	*pasv;
+  char	*file;
+  int	i;
   char	buff[BUFSIZ];
 
   if ((pasv = init_epsv_connection(state)) != NULL)
@@ -57,7 +66,12 @@ void	retr(t_cstate *state, char *arg)
       write_sock(buff, state->net->socket, -1);
       if (serv_response(state) == 0)
         {
-          recv_file(pasv, arg);
+          i = strlen(arg) - 1;
+          while (arg[i] != '/' && i >= 0)
+            --i;
+          ++i;
+          file = &(arg[i]);
+          recv_file(pasv, file);
           serv_response(state);
         }
     }
