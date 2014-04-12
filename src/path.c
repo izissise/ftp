@@ -41,8 +41,7 @@ char	*path_to_bd_path(char *basepath, char *path)
   len = (path ? strlen(path) : 0) + (basepath ? strlen(basepath) : 0)  + 3;
   if (!path || !basepath || (tmppath = malloc(len)) == NULL)
     return (NULL);
-  snprintf(tmppath, len, "%s/%s/%s", ((path[0] == '/') ? basepath : "./"),
-           path, "/");
+  snprintf(tmppath, len, "%s%s", ((path[0] == '/') ? basepath : "./"), path);
   abspath = abs_path(tmppath);
   free(tmppath);
   if ((abspath == NULL) || (basepath == NULL))
