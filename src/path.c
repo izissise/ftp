@@ -32,7 +32,6 @@ char	*get_pwd()
   return (res);
 }
 
-
 char	*path_to_bd_path(char *basepath, char *path)
 {
   char	*abspath;

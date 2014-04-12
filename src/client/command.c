@@ -5,7 +5,7 @@
 ** Login   <moriss_h@epitech.net>
 **
 ** Started on  Mon Oct  8 09:34:29 2012 hugues morisset
-** Last update Mon Oct  8 16:20:21 2012 hugues morisset
+** Last update Sat Apr 12 16:14:56 2014 Hugues
 */
 
 #include "client.h"
@@ -26,7 +26,7 @@ static t_strfunc	cmds[] = {
 
 static void	send_unk_cmd(t_cstate *state, char *line, char *arg)
 {
-  char	buff[BUFSIZ];
+  char		buff[BUFSIZ];
 
   snprintf(buff, sizeof(buff), "%s %s\n", line, arg);
   write_sock(buff, state->net->socket, -1);
