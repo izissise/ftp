@@ -62,4 +62,3 @@ void	do_commands(t_cstate *state, char *line)
     send_unk_cmd(state, line, arg);
   free(arg);
 }
-

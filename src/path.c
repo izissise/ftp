@@ -32,17 +32,6 @@ char	*get_pwd()
   return (res);
 }
 
-int	is_path_out(char *basepath, char *path)
-{
-  char	*abspath;
-
-  abspath = abs_path(path);
-  if ((abspath == NULL) || (basepath == NULL))
-    return (1);
-  if (strncmp(basepath, abspath, strlen(basepath)))
-    return (1);
-  return (0);
-}
 
 char	*path_to_bd_path(char *basepath, char *path)
 {
@@ -53,7 +42,7 @@ char	*path_to_bd_path(char *basepath, char *path)
   len = (path ? strlen(path) : 0) + (basepath ? strlen(basepath) : 0)  + 3;
   if (!path || !basepath || (tmppath = malloc(len)) == NULL)
     return (NULL);
-  snprintf(tmppath, len, "%s%s%s", ((path[0] == '/') ? basepath : "./"),
+  snprintf(tmppath, len, "%s/%s/%s", ((path[0] == '/') ? basepath : "./"),
            path, "/");
   abspath = abs_path(tmppath);
   free(tmppath);
@@ -67,27 +56,48 @@ char	*path_to_bd_path(char *basepath, char *path)
   return (abspath);
 }
 
+void	file_and_path(char **path, char **file)
+{
+  int	i;
+  char	*res;
+  char	*tmp;
+
+  if ((i = strlen(*path)) <= 0)
+    return ;
+  while (--i >= 0)
+    if ((*path)[i] == '/')
+      {
+        (*path)[i] = '\0';
+        break ;
+      }
+  tmp = &((*path)[i + ((*path)[0] != '\0')]);
+  if ((res = malloc((strlen(tmp) + 3) * sizeof(char))) == NULL)
+    return ;
+  strcpy(res, "/");
+  strcpy(&(res[1]), tmp);
+  *file = res;
+  if (i == -1)
+    {
+      free(*path);
+      *path = strdup("./");
+    }
+}
+
 int	switch_paths(char *basepath, char **path, int removefile)
 {
   char	*tmp;
-  int	i;
+  char	*tmp2;
   char	*file;
   char	*tmppath;
 
   file = NULL;
+  tmp2 = NULL;
   tmppath = strdup(*path);
-  if (removefile && tmppath && (i = strlen(tmppath)) > 0)
-    {
-      while (--i >= 0)
-        if (tmppath[i] == '/')
-          {
-            tmppath[i] = '\0';
-            break ;
-          }
-      file = &(tmppath[i + (tmppath[0] != '\0')]);
-    }
-  if ((tmp = path_to_bd_path(basepath, tmppath)) != NULL)
-  file = stradd(tmp, file);
+  if (removefile && tmppath)
+    file_and_path(&tmppath, &tmp2);
+  file = (tmp = path_to_bd_path(basepath, tmppath)) ? stradd(tmp, tmp2) : NULL;
+  if (removefile && tmppath)
+    free(tmp2);
   free(tmp);
   free(tmppath);
   if (!file)

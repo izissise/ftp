@@ -51,14 +51,11 @@ char	*calculate_epsvconnection_info(t_net *net)
   return (strdup(buff));
 }
 
-t_net			*create_passive_connection(t_fclient *client)
+t_net			*create_passive_connection()
 {
   t_net			*res;
-  struct sockaddr	*addr;
 
-  addr = (struct sockaddr*)(&(client->net->addr));
-  if ((res = create_connection(listening_ip(addr->sa_family),
-                               NULL, SOCK_STREAM, &bind)) == NULL)
+  if ((res = create_connection(SERVERIP, NULL, SOCK_STREAM, &bind)) == NULL)
     return (NULL);
   if (listen(res->socket, 1) == -1)
     {

@@ -15,7 +15,7 @@ void	epsv(t_fclient *client, UNSEDP char *arg)
   char	*info;
   char	buff[BUFSIZ];
 
-  if (((client->pasv = create_passive_connection(client)) == NULL)
+  if (((client->pasv = create_passive_connection()) == NULL)
       || (info = calculate_epsvconnection_info(client->pasv)) == NULL)
     {
       write_sock("500 Can't create epsv.\n", client->net->socket, - 1);
@@ -36,7 +36,7 @@ void	pasv(t_fclient *client, UNSEDP char *arg)
 
   if (client->pasv)
     close_connection(client->pasv);
-  if (((client->pasv = create_passive_connection(client)) == NULL)
+  if (((client->pasv = create_passive_connection()) == NULL)
       || (info = calculate_pasvconnection_info(client->pasv)) == NULL)
     {
       write_sock("500 Can't create pasv.\n", client->net->socket, - 1);

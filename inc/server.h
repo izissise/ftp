@@ -46,7 +46,7 @@ void	epsv(t_fclient *client, char *arg);
 void	user(t_fclient *client, char *arg);
 void	pass(t_fclient *client, char *arg);
 
-t_net	*create_passive_connection(t_fclient *client);
+t_net	*create_passive_connection();
 char	*calculate_pasvconnection_info(t_net *net);
 char	*calculate_epsvconnection_info(t_net *net);
 void	accept_passive_connection(t_fclient *client);
