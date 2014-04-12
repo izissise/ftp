@@ -31,7 +31,7 @@ void	(*commands(char *command, t_strfunc *cmds, int size))()
   i = 0;
   while (i < size)
     {
-      if (!(strncasecmp((cmds[i]).str, command, strlen(command))))
+      if (!(strncasecmp((cmds[i]).str, command, strlen((cmds[i]).str))))
         return ((cmds[i]).func);
       i++;
     }
