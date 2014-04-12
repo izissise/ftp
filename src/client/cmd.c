@@ -82,3 +82,16 @@ void	quit(t_cstate *state, UNSEDP char *arg)
 {
   state->end = 1;
 }
+
+void	pass(t_cstate *state, char *arg)
+{
+  char	buff[BUFSIZ];
+
+  snprintf(buff, sizeof(buff), "%s %s\n", "PASS", arg);
+  write_sock(buff, state->net->socket, -1);
+  if (serv_response(state) == 0)
+    {
+      send_line("TYPE I", state->net->socket);
+      serv_response(state);
+    }
+}

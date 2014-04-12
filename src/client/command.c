@@ -21,6 +21,7 @@ static t_strfunc	cmds[] = {
   {"RETR", &retr},
   {"PUT", &stor},
   {"STOR", &stor},
+  {"PASS", &pass},
   {"QUIT", &quit}
 };
 

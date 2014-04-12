@@ -40,5 +40,6 @@ void	list(t_cstate *state, char *arg);
 void	stor(t_cstate *state, char *arg);
 void	retr(t_cstate *state, char *arg);
 void	quit(t_cstate *state, UNSEDP char *arg);
+void	pass(t_cstate *state, char *arg);
 
 #endif /* !CLIENT_H_INCLUDED */
