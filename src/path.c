@@ -68,7 +68,7 @@ void	file_and_path(char **path, char **file)
         (*path)[i] = '\0';
         break ;
       }
-  tmp = &((*path)[i + ((*path)[0] != '\0')]);
+  tmp = &((*path)[i + 1]);
   if ((res = malloc((strlen(tmp) + 3) * sizeof(char))) == NULL)
     return ;
   strcpy(res, "/");

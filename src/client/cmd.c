@@ -33,7 +33,7 @@ void	stor(t_cstate *state, char *arg)
   char	*file;
   int	i;
 
-  if (switch_paths("./", &arg, 0))
+  if (switch_paths("", &arg, 0))
     {
       if ((pasv = init_epsv_connection(state)) != NULL)
         {

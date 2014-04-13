@@ -15,7 +15,7 @@ char			*get_ip_addr(t_net *net)
   struct sockaddr	*sa;
   void			*res;
   char			*ret;
-  char			buff[4096];
+  char			buff[BUFSIZ];
 
   if (!net)
     return (NULL);
