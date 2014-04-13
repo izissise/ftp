@@ -5,7 +5,7 @@
 ## Login   <moriss_h@epitech.net>
 ##
 ## Started on  Sun Jun  9 03:35:24 2013 Hugues
-## Last update Mon Mar 24 21:03:33 2014 Hugues
+## Last update Sun Apr 13 15:05:03 2014 Hugues
 ##
 
 SRC			=	inet.c \
@@ -43,13 +43,13 @@ RM		=	rm -f
 
 CLIENT		=	client
 SERVER		=	serveur
-NAME			=	my_ftp
+NAME		=	my_ftp
 
 OBJDIR		=	obj/
 SRCDIR		=	src/
 INCDIR		=	inc/
 
-CFLAGS		+=	-I$(INCDIR) -g
+CFLAGS		+=	-I$(INCDIR)
 CFLAGS		+=	-Wall -Wextra -Winit-self
 CFLAGS		+=	-Wunused-function -pipe -Winit-self
 
