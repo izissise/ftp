@@ -101,7 +101,7 @@ void	stor(t_fclient *client, char *arg)
     write_sock("550 Permission denied.\n", client->net->socket, -1);
   else
     {
-      write_sock("150 Transfering file.\n", client->net->socket, -1);
+      write_sock("150 Transferring file.\n", client->net->socket, -1);
       recv_file(client->pasv, file);
       if (file != arg)
         free(file);
