@@ -60,8 +60,8 @@ int	main(UNSEDP int ac, UNSEDP char **av)
   char	*ip;
 
   signal(SIGCHLD, SIG_IGN);
-  if (!(server = create_connection(SERVERIP, av[1] ? av[1] : "22",
-                                   SOCK_STREAM, &bind)))
+  if (!(server = create_connection(listening_ip(SERVERTYPE),
+                                   av[1] ? av[1] : "22", SOCK_STREAM, &bind)))
     return (1);
   if (listen(server->socket, MAX_CLIENTS) == -1)
     perror("listen");
@@ -79,4 +79,3 @@ int	main(UNSEDP int ac, UNSEDP char **av)
   close_connection(server);
   return (0);
 }
-

@@ -17,6 +17,7 @@
 # include "network.h"
 # include "str.h"
 
+# define SERVERTYPE AF_INET
 # define SERVERIP "10.10.253.121"
 
 typedef struct	s_fclient
