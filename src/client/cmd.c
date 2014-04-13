@@ -46,10 +46,10 @@ void	stor(t_cstate *state, char *arg)
           write_sock(buff, state->net->socket, -1);
           if (serv_response(state) == 0)
             send_file(pasv, arg);
+          close_connection(pasv);
           free(arg);
           serv_response(state);
         }
-      close_connection(pasv);
     }
 }
 
